@@ -1,0 +1,42 @@
+{
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build"
+    },
+    "devDependencies": {
+        "@tailwindcss/forms": "^0.5.2",
+        "alpinejs": "^3.4.2",
+        "autoprefixer": "^10.4.2",
+        "axios": "^1.6.1",
+        "laravel-vite-plugin": "^0.8.0",
+        "postcss": "^8.4.31",
+        "tailwindcss": "^3.1.0",
+        "vite": "^4.0.0"
+    },
+    "name": "sistem-informasi-penjadwalan-agenda-skpd-kota-banjarbaru",
+    "description": "<p align=\"center\"><a href=\"https://laravel.com\" target=\"_blank\"><img src=\"https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg\" width=\"400\" alt=\"Laravel Logo\"></a></p>",
+    "version": "1.0.0",
+    "main": "vite.config.js",
+    "directories": {
+        "test": "tests"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ramaaanr/sistem-informasi-penjadwalan-agenda-skpd-kota-banjarbaru.git"
+    },
+    "author": "kel-3-magang-diskominfo-banjarbaru",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/ramaaanr/sistem-informasi-penjadwalan-agenda-skpd-kota-banjarbaru/issues"
+    },
+    "homepage": "https://github.com/ramaaanr/sistem-informasi-penjadwalan-agenda-skpd-kota-banjarbaru#readme",
+    "dependencies": {
+        "flowbite": "^2.2.1",
+        "fullcalendar": "^6.1.10",
+        "jquery": "^3.7.1",
+        "jspdf": "^2.5.1",
+        "sweetalert2": "^11.10.1"
+    }
+}

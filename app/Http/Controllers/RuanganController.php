@@ -1,0 +1,112 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Ruangan;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
+
+class RuanganController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $ruangan = Ruangan::orderBy('created_at', 'desc')->get();
+        return view('pages.ruangan.index', compact('ruangan'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        return view('pages.ruangan.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nama_ruangan' => 'required|string|max:255',
+            'kapasitas' => 'required|integer|min:1',
+            'status' => 'required|string|in:tersedia,tidak tersedia',
+        ]);
+
+        try {
+            Ruangan::create([
+                'nama_ruangan' => $request->nama_ruangan,
+                'kapasitas' => $request->kapasitas,
+                'status_ruang' => $request->status,
+            ]);
+
+            Session::flash('success', 'Ruangan Berhasil Ditambahkan');
+        } catch (\Exception $e) {
+            Session::flash('error', $e->getMessage());
+        }
+
+        return redirect()->back();
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Ruangan $ruangan)
+    {
+        
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Ruangan $ruangan)
+    {
+        $ruangan = Ruangan::findOrFail($ruangan->id);
+        return view('pages.ruangan.edit', compact('ruangan'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Ruangan $ruangan)
+    {
+        // update data
+        $request->validate([
+            'nama_ruangan' => 'required|string|max:255',
+            'kapasitas' => 'required|integer|min:1',
+            'status' => 'required|string|in:tersedia,tidak tersedia',
+        ]);
+
+        try {
+            Ruangan::findOrFail($ruangan->id)->update([
+                'nama_ruangan' => $request->nama_ruangan,
+                'kapasitas' => $request->kapasitas,
+                'status_ruang' => $request->status,
+            ]);
+
+            Session::flash('success', 'Ruangan Berhasil Diubah');
+        } catch (\Exception $e) {
+            Session::flash('error', $e->getMessage());
+        }
+
+        return redirect()->back();
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        try {
+            Ruangan::findOrFail($id)->delete();
+            Session::flash('success', 'Ruangan Berhasil Dihapus');
+        } catch (\Exception $e) {
+            Session::flash('error', $e->getMessage());
+        }
+
+        return redirect()->back();
+    }
+}
