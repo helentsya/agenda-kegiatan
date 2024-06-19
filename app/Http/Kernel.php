@@ -40,7 +40,7 @@ class Kernel extends HttpKernel
 
         'api' => [
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-            \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
+            \Illuminate\Routing\Middleware\ThrottleRequests::class . ':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
     ];
@@ -68,5 +68,10 @@ class Kernel extends HttpKernel
         'pegawai' => \App\Http\Middleware\IsPegawai::class,
         'kepalapejabat' => \App\Http\Middleware\IsKepalaPejabat::class,
         'bidang' => \App\Http\Middleware\IsBidang::class,
+    ];
+
+    protected $routeMiddleware = [
+        // ...
+        // 'role' => \App\Http\Middleware\RoleMiddleware::class,
     ];
 }

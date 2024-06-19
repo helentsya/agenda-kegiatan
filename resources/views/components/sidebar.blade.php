@@ -1,5 +1,5 @@
 @php
- $bidang = App\Models\Bidang::all();
+    $bidang = App\Models\Bidang::all();
 @endphp
 <aside id="sidebar" class="bg-[#343a40] w-56 h-screen  fixed top-0 duration-100 ease-in-out z-40">
     <ul class="w-full h-full ">
@@ -10,7 +10,7 @@
             </a>
         </li>
 
-        
+
         @if (Auth::user()->roles == 'admin')
             <li class="px-2">
                 <a class="flex pl-4 rounded-md py-2 content-center hover:bg-[#5c6268]"
@@ -24,10 +24,9 @@
                 </a>
             </li>
             <li class="px-2">
-                <a class="flex pl-4 rounded-md py-2 content-center hover:bg-[#5c6268]"
-                    href="#">
-                    <svg class="w-[16px] h-[16px] mr-2 text-white" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                <a class="flex pl-4 rounded-md py-2 content-center hover:bg-[#5c6268]" href="#">
+                    <svg class="w-[16px] h-[16px] mr-2 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor" viewBox="0 0 20 20">
                         <path
                             d="M14.707 7.793a1 1 0 0 0-1.414 0L11 10.086V1.5a1 1 0 0 0-2 0v8.586L6.707 7.793a1 1 0 1 0-1.414 1.414l4 4a1 1 0 0 0 1.416 0l4-4a1 1 0 0 0-.002-1.414Z" />
                         <path
@@ -36,7 +35,7 @@
                     <span class="text-sm text-white">Agenda</span>
                 </a>
             </li>
-            @foreach($bidang as $b)
+            @foreach ($bidang as $b)
                 <li class="px-2 pl-5">
                     <a class="flex pl-5 ml-2 rounded-md py-2 content-center hover:bg-[#5c6268]"
                         href="{{ route('bidang.agenda', $b->id) }}">
@@ -140,8 +139,7 @@
                 </a>
             </li>
             <li class="px-2">
-                <a class="flex pl-4 rounded-md py-2 content-center hover:bg-[#5c6268]"
-                    href="{{ route('pegawai.show-print-pdf') }}">
+                <a class="flex pl-4 rounded-md py-2 content-center hover:bg-[#5c6268]" href="#">
                     <svg class="w-[16px] h-[16px] mr-2 text-white" aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                         <path
@@ -149,9 +147,17 @@
                         <path
                             d="M18 12h-2.55l-2.975 2.975a3.5 3.5 0 0 1-4.95 0L4.55 12H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2Zm-3 5a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z" />
                     </svg>
-                    <span class="text-sm text-white">Lihat Agenda</span>
+                    <span class="text-sm text-white">Agenda</span>
                 </a>
             </li>
+            @foreach ($bidang as $b)
+                <li class="px-2 pl-5">
+                    <a class="flex pl-5 ml-2 rounded-md py-2 content-center hover:bg-[#5c6268]"
+                        href="{{ route('pegawai.bidang.agenda', $b->id) }}">
+                        <span class="text-sm text-white">{{ $b->nama_bidang }}</span>
+                    </a>
+                </li>
+            @endforeach
             <li class="px-2">
                 <a class="flex pl-4 rounded-md py-2 content-center hover:bg-[#5c6268]"
                     href="{{ route('pegawai.ruangan.index') }}">
@@ -176,6 +182,17 @@
             </li>
             <li class="px-2">
                 <a class="flex pl-4 rounded-md py-2 content-center hover:bg-[#5c6268]"
+                    href="{{ route('pegawai.kelola-pegawai.index') }}">
+                    <svg class="w-[16px] h-[16px] mr-2 fill-white text-white" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                            d="M9 1v16M1 9h16" />
+                    </svg>
+                    <span class="text-sm text-white">Kelola Pegawai</span>
+                </a>
+            </li>
+            <li class="px-2">
+                <a class="flex pl-4 rounded-md py-2 content-center hover:bg-[#5c6268]"
                     href="{{ route('profile.edit') }}">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
                         fill="#FFFFFF">
@@ -187,8 +204,7 @@
             </li>
         @elseif (Auth::user()->roles == 'kepalapejabat')
             <li class="px-2">
-                <a class="flex pl-4 rounded-md py-2 content-center hover:bg-[#5c6268]"
-                    href="{{ route('kepala.show-print-pdf') }}">
+                <a class="flex pl-4 rounded-md py-2 content-center hover:bg-[#5c6268]">
                     <svg class="w-[16px] h-[16px] mr-2 text-white" aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                         <path
@@ -198,64 +214,94 @@
                     </svg>
                     <span class="text-sm text-white">Lihat Agenda</span>
                 </a>
-            </li>
-            <li class="px-2">
-                <a class="flex pl-4 rounded-md py-2 content-center hover:bg-[#5c6268]"
-                    href="{{ route('kepala.ruangan.index') }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M120-120v-560h240v-80l120-120 120 120v240h240v400H120Zm80-80h80v-80h-80v80Zm0-160h80v-80h-80v80Zm0-160h80v-80h-80v80Zm240 320h80v-80h-80v80Zm0-160h80v-80h-80v80Zm0-160h80v-80h-80v80Zm0-160h80v-80h-80v80Zm240 480h80v-80h-80v80Zm0-160h80v-80h-80v80Z"/></svg>
-                    <span class="text-sm text-white">Data Ruangan</span>
+                @foreach ($bidang as $b)
+            <li class="px-2 pl-5">
+                <a class="flex pl-5 ml-2 rounded-md py-2 content-center hover:bg-[#5c6268]"
+                    href="{{ route('kepala.bidang.agenda', $b->id) }}">
+                    <span class="text-sm text-white">{{ $b->nama_bidang }}</span>
                 </a>
             </li>
-            <li class="px-2">
-                <a class="flex pl-4 rounded-md py-2 content-center hover:bg-[#5c6268]"
-                    href="{{ route('kepala.cuti.index') }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg>
-                    <span class="text-sm text-white">Lihat Cuti</span>
-                </a>
-            </li>
-            <li class="px-2">
-                <a class="flex pl-4 rounded-md py-2 content-center hover:bg-[#5c6268]"
-                    href="{{ route('profile.edit') }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                        fill="#FFFFFF">
-                        <path
-                            d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Zm80-80h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0-80Zm0 400Z" />
-                    </svg>
-                    <span class="text-sm text-white">Edit Profile</span>
-                </a>
-            </li>
-        @elseif (Auth::user()->roles == 'bidang')
-            <li class="px-2">
-                <a class="flex pl-4 rounded-md py-2 content-center hover:bg-[#5c6268]"
-                    href="#">
-                    <svg class="w-[16px] h-[16px] mr-2 text-white" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                        <path
-                            d="M14.707 7.793a1 1 0 0 0-1.414 0L11 10.086V1.5a1 1 0 0 0-2 0v8.586L6.707 7.793a1 1 0 1 0-1.414 1.414l4 4a1 1 0 0 0 1.416 0l4-4a1 1 0 0 0-.002-1.414Z" />
-                        <path
-                            d="M18 12h-2.55l-2.975 2.975a3.5 3.5 0 0 1-4.95 0L4.55 12H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2Zm-3 5a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z" />
-                    </svg>
-                    <span class="text-sm text-white">Agenda</span>
-                </a>
-            </li>
-            @foreach($bidang as $b)
-                @if(Auth::user()->pegawai->id_bidang == $b->id)
+        @endforeach
+        </li>
+        <li class="px-2">
+            <a class="flex pl-4 rounded-md py-2 content-center hover:bg-[#5c6268]"
+                href="{{ route('kepala.ruangan.index') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#FFFFFF">
+                    <path
+                        d="M120-120v-560h240v-80l120-120 120 120v240h240v400H120Zm80-80h80v-80h-80v80Zm0-160h80v-80h-80v80Zm0-160h80v-80h-80v80Zm240 320h80v-80h-80v80Zm0-160h80v-80h-80v80Zm0-160h80v-80h-80v80Zm0-160h80v-80h-80v80Zm240 480h80v-80h-80v80Zm0-160h80v-80h-80v80Z" />
+                </svg>
+                <span class="text-sm text-white">Data Ruangan</span>
+            </a>
+        </li>
+        <li class="px-2">
+            <a class="flex pl-4 rounded-md py-2 content-center hover:bg-[#5c6268]"
+                href="{{ route('kepala.cuti.index') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#FFFFFF">
+                    <path
+                        d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z" />
+                </svg>
+                <span class="text-sm text-white">Lihat Cuti</span>
+            </a>
+        </li>
+        <li class="px-2">
+            <a class="flex pl-4 rounded-md py-2 content-center hover:bg-[#5c6268]"
+                href="{{ route('kepala.kelola-pegawai.index') }}">
+                <svg class="w-[16px] h-[16px] mr-2 fill-white text-white" aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                        d="M9 1v16M1 9h16" />
+                </svg>
+                <span class="text-sm text-white">Kelola Pegawai</span>
+            </a>
+        </li>
+        <li class="px-2">
+            <a class="flex pl-4 rounded-md py-2 content-center hover:bg-[#5c6268]"
+                href="{{ route('profile.edit') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#FFFFFF">
+                    <path
+                        d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Zm80-80h480v-32q0-11-5.5-20T700-306q-54-27-109-40.5T480-360q-56 0-111 13.5T260-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm0-80Zm0 400Z" />
+                </svg>
+                <span class="text-sm text-white">Edit Profile</span>
+            </a>
+        </li>
+    @elseif (Auth::user()->roles == 'bidang')
+        <li class="px-2">
+            <a class="flex pl-4 rounded-md py-2 content-center hover:bg-[#5c6268]" href="#">
+                <svg class="w-[16px] h-[16px] mr-2 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                        d="M14.707 7.793a1 1 0 0 0-1.414 0L11 10.086V1.5a1 1 0 0 0-2 0v8.586L6.707 7.793a1 1 0 1 0-1.414 1.414l4 4a1 1 0 0 0 1.416 0l4-4a1 1 0 0 0-.002-1.414Z" />
+                    <path
+                        d="M18 12h-2.55l-2.975 2.975a3.5 3.5 0 0 1-4.95 0L4.55 12H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2Zm-3 5a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z" />
+                </svg>
+                <span class="text-sm text-white">Agenda</span>
+            </a>
+        </li>
+        @foreach ($bidang as $b)
+            @if (Auth::user()->pegawai->id_bidang == $b->id)
                 <li class="px-2 pl-5">
                     <a class="flex pl-5 ml-2 rounded-md py-2 content-center hover:bg-[#5c6268]"
                         href="{{ route('bidang.index') }}">
                         <span class="text-sm text-white">{{ $b->nama_bidang }}</span>
                     </a>
                 </li>
-                @endif
-            @endforeach
-            <li class="px-2">
-                <a class="flex pl-4 rounded-md py-2 content-center hover:bg-[#5c6268]"
-                    href="{{ route('bidang.cuti.index') }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#FFFFFF"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg>
-                    <span class="text-sm text-white">Cuti</span>
-                </a>
-            </li>
-            {{-- <li class="px-2">
+            @endif
+        @endforeach
+        <li class="px-2">
+            <a class="flex pl-4 rounded-md py-2 content-center hover:bg-[#5c6268]"
+                href="{{ route('bidang.cuti.index') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                    fill="#FFFFFF">
+                    <path
+                        d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z" />
+                </svg>
+                <span class="text-sm text-white">Cuti</span>
+            </a>
+        </li>
+        {{-- <li class="px-2">
                 <a class="flex pl-4 rounded-md py-2 content-center hover:bg-[#5c6268]"
                     href="{{ route('profile.edit') }}">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
@@ -266,7 +312,7 @@
                     <span class="text-sm text-white">Edit Profile</span>
                 </a>
             </li> --}}
-        
+
         @endif
     </ul>
 </aside>

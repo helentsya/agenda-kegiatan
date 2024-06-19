@@ -26,11 +26,18 @@ class User extends Authenticatable
         'roles'
     ];
 
-    public function cuti() {
+    public function cuti()
+    {
         return $this->hasMany(Cuti::class);
     }
 
-    public function pegawai() {
+    public function pegawai()
+    {
         return $this->belongsTo(Pegawai::class, 'id_pegawai');
+    }
+
+    public function bidang()
+    {
+        return $this->belongsTo(Bidang::class, 'id_bidang');
     }
 }

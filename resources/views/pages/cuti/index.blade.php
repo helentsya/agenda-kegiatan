@@ -26,8 +26,8 @@
                 <h2 class="font-bold text-xl">Kelola Cuti Pegawai</h2>
                 @if (!Auth::user()->roles != 'kepala pejabat')
                     <a href="{{ route('pegawai.cuti.create') }}"
-                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Tambah
-                    Cuti</a>
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Tambah
+                        Cuti</a>
                 @endif
             </div>
             <div class="relative overflow-x-auto border border-gray-300 shadow-md sm:rounded-lg mt-4 ">
@@ -67,19 +67,19 @@
                                                 Disetujui</span>
                                         @else
                                             @if (auth()->user()->roles == 'admin')
-                                            <form method="POST" action="{{ route('cuti.update', $item->id) }}">
-                                                @method('PUT')
-                                                @csrf
-                                                <button
-                                                    class="text-green-700 mt-2 mr-2 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-2 py-1 text-center ">Setujui</button>
-                                            </form>
+                                                <form method="POST" action="{{ route('cuti.update', $item->id) }}">
+                                                    @method('PUT')
+                                                    @csrf
+                                                    <button
+                                                        class="text-green-700 mt-2 mr-2 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-2 py-1 text-center ">Setujui</button>
+                                                </form>
                                             @else
-                                            <form method="POST" action="{{ route('kepala.cuti.update', $item->id) }}">
-                                                @method('PUT')
-                                                @csrf
-                                                <button
-                                                    class="text-green-700 mt-2 mr-2 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-2 py-1 text-center ">Setujui</button>
-                                            </form>
+                                                <form method="POST" action="{{ route('kepala.cuti.update', $item->id) }}">
+                                                    @method('PUT')
+                                                    @csrf
+                                                    <button
+                                                        class="text-green-700 mt-2 mr-2 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-2 py-1 text-center ">Setujui</button>
+                                                </form>
                                             @endif
                                         @endif
                                     </td>

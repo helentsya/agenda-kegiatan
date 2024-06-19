@@ -359,4 +359,34 @@ class EventController extends Controller
             abort(500);
         }
     }
+    //Print
+    public function getEventsByDateRange(Request $request)
+    {
+        $mulaiTanggal = $request->query('mulai_tanggal');
+        $sampaiTanggal = $request->query('sampai_tanggal');
+        $bidangId = $request->query('bidang_id');
+
+        $query = Event::whereBetween('tanggal', [$mulaiTanggal, $sampaiTanggal]);
+
+        if ($bidangId) {
+            $query->where('bidang_id', $bidangId);
+        }
+
+        $events = $query->get();
+
+        return response()->json($events);
+    }
+
+    public function getEventDetail(Request $request)
+    {
+        $eventId = $request->query('id');
+
+        $event = Event::find($eventId);
+
+        if ($event) {
+            return response()->json($event);
+        }
+
+        return response()->json(['message' => 'Event not found'], 404);
+    }
 }

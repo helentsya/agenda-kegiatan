@@ -7,6 +7,7 @@ use App\Models\Pegawai;
 use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 
@@ -15,9 +16,20 @@ class PegawaiController extends Controller
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
-        $pegawai = Pegawai::with('bidang')->get();
+        $user = Auth::user();
+
+        if ($user->roles == 'admin') {
+            $pegawai = Pegawai::with('bidang')->get();
+        } elseif ($user->roles == 'kepalapejabat') {
+            $pegawai = Pegawai::with('bidang')->get();
+        } else {
+            $pegawai = Pegawai::with('bidang')->where('id_bidang', $user->id_bidang)->get();
+        }
+
+
         return view('pages.pegawai.index', compact('pegawai'));
     }
 
@@ -79,7 +91,6 @@ class PegawaiController extends Controller
      */
     public function show(string $id)
     {
-        //
     }
 
     /**
@@ -87,15 +98,68 @@ class PegawaiController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = Auth::user();
+        $pegawai = Pegawai::findOrFail($id);
+        $bidang = Bidang::all();
+        if ($user->roles == 'admin') {
+            return view('pages.admin.edit', compact(['pegawai', 'bidang']));
+        } else {
+            return view('pages.pegawai.edit', compact(['pegawai', 'bidang']));
+        }
     }
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        // Validasi data input
+        $request->validate([
+            'nama_pegawai' => 'required|string|max:255',
+            'nip' => 'required|numeric',
+            'jenis_kelamin' => 'required|in:laki-laki,perempuan',
+            'tempat_lahir' => 'required|string|max:255',
+            'tanggal_lahir' => 'required|date',
+            'jabatan' => 'required|string|max:255',
+            'alamat' => 'required|string|max:255',
+
+
+            'password' => 'nullable',
+        ]);
+
+        // Cari data pegawai dan user berdasarkan ID
+        $pegawai = Pegawai::findOrFail($id);
+        $user = User::where('id_pegawai', $id)->firstOrFail();
+
+        // Update data pegawai
+        $pegawai->update([
+            'nama_pegawai' => $request->nama_pegawai,
+            'nip' => $request->nip,
+            // 'id_bidang' => $request->id_bidang,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'tempat_lahir' => $request->tempat_lahir,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'jabatan' => $request->jabatan,
+            'alamat' => $request->alamat,
+
+
+            'password' => $request->filled('password') ? Hash::make($request->password) : $pegawai->password,
+        ]);
+
+        // Update data user
+        $user->update([
+            'nama_user' => $request->nama_pegawai,
+            'username' => $request->username,
+            'email' => $request->email,
+            'password' => $request->filled('password') ? Hash::make($request->password) : $user->password,
+            'roles' => "bidang",
+        ]);
+        if (auth()->user()->roles == 'admin') {
+            return redirect()->route('kelola-pegawai.index')->with('update', 'Data pegawai berhasil diupdate.');
+        } else {
+            return redirect()->route('pegawai.kelola-pegawai.index')->with('update', 'Data pegawai berhasil diupdate.');
+        }
     }
 
     /**
