@@ -48,6 +48,12 @@
                         <a class="nav-link" href="#literasi">Literasi</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="#pengumuman">Pengumuman</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#ruangan">Ruangan</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="#subscribe">Hubungi Kami</a>
                     </li>
                     <li class="nav-item">
@@ -294,6 +300,55 @@
             </div>
         </div>
     </section>
+
+    <section id="pengumuman" class="section" data-stellar-background-ratio="0.2">
+        <div class="container">
+            <div class="section-header">
+                <br>
+                <h2 class="section-title wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">Pengumuman
+                    Terbaru</h2>
+                <hr class="lines wow zoomIn" data-wow-delay="0.3s">
+            </div>
+            <div class="row">
+                @foreach ($pengumuman as $item)
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 mb-4">
+                        <div class="pengumuman-box show-box wow fadeInDown animated" data-wow-offset="10"
+                            style="padding: 20px;">
+                            <img src="/images/diskominfo.jpg" style="width: 100%;" alt="">
+                            <h4>{{ $item->judul_pengumuman }}</h4>
+                            <p>{{ $item->isi_pengumuman }}</p>
+                            <small>{{ $item->tanggal_pengumuman }}</small>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+
+    <section id="ruangan" class="section" data-stellar-background-ratio="0.2">
+        <div class="container">
+            <div class="section-header">
+                <br>
+                <h2 class="section-title wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">Ruangan Kami
+                </h2>
+                <hr class="lines wow zoomIn" data-wow-delay="0.3s">
+            </div>
+            <div class="row">
+                @foreach ($ruangan as $room)
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                        <div class="ruangan-box show-box wow fadeInDown animated" data-wow-offset="10">
+                            <img src="/images/building.svg" style="width: 100%;" alt="">
+                            <h4>{{ $room->nama_ruangan }}</h4>
+                            <p>Kapasitas: {{ $room->kapasitas }}</p>
+                            <p>Status: {{ $room->status_ruang }}</p>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
     <!-- Features Section End -->
 
     <!-- Modal -->

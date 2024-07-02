@@ -2,7 +2,7 @@
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
     <div class="form-container flex flex-wrap content-center justify-center w-screen h-screen"
-        style="background-image: url('images/login-bg.jpg')">
+        style="background-image: url('images/bg.jpg'); background-size: cover; background-position: center;">
         <form class="bg-white rounded-md shadow-lg p-8 flex flex-col w-fit h-fit" method="post"
             action="{{ route('login') }}">
             @csrf
@@ -31,6 +31,7 @@
             <button class="w-72 py-1 button-login mt-8 text-white bg-blue-500 rounded-md">Login</button>
         </form>
     </div>
+
 
     @if (Session::has('error'))
         <script>

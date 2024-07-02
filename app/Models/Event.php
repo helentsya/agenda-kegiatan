@@ -29,7 +29,13 @@ class Event extends Model
         // 'tanggal'
     ];
 
-    public function ruangan() {
+    public function ruangan()
+    {
         return $this->belongsTo(Ruangan::class, 'id_ruangan');
+    }
+
+    public function bidang()
+    {
+        return $this->belongsTo(Bidang::class, 'id_bidang');
     }
 }

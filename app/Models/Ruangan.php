@@ -13,6 +13,9 @@ class Ruangan extends Model
         'id_agenda',
         'nama_ruangan',
         'kapasitas',
-        // 'status_ruang'
+        'status_ruang',
+        'hari',
+        'tanggal',
+        'durasi_pemakaian'
     ];
 }

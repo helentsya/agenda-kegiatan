@@ -23,6 +23,7 @@ class PegawaiController extends Controller
 
         if ($user->roles == 'admin') {
             $pegawai = Pegawai::with('bidang')->get();
+            return view('pages.admin.index', compact('pegawai'));
         } elseif ($user->roles == 'kepalapejabat') {
             $pegawai = Pegawai::with('bidang')->get();
         } else {
@@ -38,8 +39,14 @@ class PegawaiController extends Controller
      */
     public function create()
     {
+
         $bidang = Bidang::all();
-        return view('pages.pegawai.create', compact('bidang'));
+        if (auth()->user()->roles == 'admin'
+        ) {
+            return view('pages.admin.create', compact('bidang'));
+        } else {
+            return view('pages.pegawai.create', compact('bidang'));
+        }
     }
 
     /**
@@ -68,7 +75,7 @@ class PegawaiController extends Controller
             $user->roles = "bidang";
             $user->save();
 
-            // Pegawai::create([
+            //  Pegawai::create([
             //     'id_bidang' => $request->bidang,
             //     'nip'     => $request->nip,
             //     'nama_pegawai' => $request->nama_pegawai,

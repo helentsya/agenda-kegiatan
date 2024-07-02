@@ -25,6 +25,7 @@ class AgendaBidangController extends Controller
         $id = Auth::user()->pegawai->id_bidang;
 
         $events = Event::select(['title', 'start_event', 'end_event'])->where('id_bidang', $id)->get();
+        $bidang = Bidang::all();
         $results = array();
         foreach ($events as $event) {
             $results[] = [
@@ -34,7 +35,7 @@ class AgendaBidangController extends Controller
             ];
         }
 
-        return view('pages.bidang.index', ['events' => $results]);
+        return view('pages.bidang.index', ['events' => $results, 'bidang']);
     }
 
     public function event_by_date(Request $request)
@@ -85,7 +86,7 @@ class AgendaBidangController extends Controller
 
         ]);
 
-        try{
+        try {
 
             Cuti::create([
                 'jenis_cuti' => $request->jenis_cuti,
@@ -98,15 +99,12 @@ class AgendaBidangController extends Controller
             ]);
 
             Session::flash('success', 'Cuti Berhasil Diajukan, Menunggu Persetujuan Admin');
-
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
 
             Session::flash('error', $e->getMessage());
-
         }
 
         return redirect()->back();
-
     }
 
     public function cuti_delete(Request $request, $id)
@@ -119,6 +117,4 @@ class AgendaBidangController extends Controller
 
         return redirect()->route('bidang.cuti.index');
     }
-
-
 }

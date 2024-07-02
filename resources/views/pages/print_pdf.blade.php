@@ -92,6 +92,8 @@
                                 title: 'Event Details',
                                 html: '<strong>Title:</strong> ' + event.title +
                                     '<br>' +
+                                    '<strong>Bidang:</strong> ' + event.bidang +
+                                    '<br>' +
                                     '<strong>Tempat:</strong> ' + event.tempat +
                                     '<br>' +
                                     '<strong>Dihadiri:</strong> ' + event.dihadiri +
@@ -164,15 +166,18 @@
             });
         });
 
+        // MASIH BELUM BISA FILTER NY
+
         function populateFieldFilter(events) {
+            console.log(events);
             const fieldFilter = $('#fieldFilter');
             fieldFilter.empty();
             fieldFilter.append('<option value="">All Fields</option>');
 
             // Get unique fields and their IDs from events
             const fields = [...new Set(events.map(event => ({
-                id: event.id_bidang,
-                name: event.nama_bidang
+                id: event.bidang && event.bidang.id ? event.bidang.id : null,
+                name: event.bidang ? event.bidang.nama_bidang : 'Tidak ada Bidang'
             })))];
 
             // Add fields to dropdown
@@ -187,19 +192,65 @@
             });
         }
 
+
         function populateTable(events) {
+            // console.log(events); // Tambahkan ini untuk melihat data yang diterima
             $('.table-body-event').empty();
             events.forEach(event => {
-                let row = $('<tr>').addClass('bg-white border-t border-gray-300 hover:bg-gray-100');
+                // Pastikan bahwa event.bidang ada
+                // let nama_bidang = event.bidang ? event.bidang.nama_bidang : 'Tidak ada Bidang';
+                let bidang_id = event.bidang ? event.bidang.id : '';
+
+                let row = $('<tr>')
+                    .addClass('bg-white border-t border-gray-300 hover:bg-gray-100')
+                    .attr('data-field-id', bidang_id); // Menyimpan id_bidang atau kosong
+
                 $('<td>').addClass('px-6 py-4').text(event.tanggal).appendTo(row);
                 $('<td>').addClass('px-6 py-4').text(event.title).appendTo(row);
-                $('<td>').addClass('px-6 py-4').text(event.bidang).appendTo(row);
-                row.append(createDetailButton(event.id));
-                row.append(createEditButton(event.id));
+                $('<td>').addClass('px-6 py-4').text(event.bidang).appendTo(row); // Menampilkan nama_bidang
+
+                row.append($('<td>').addClass('px-6 py-4').append(createDetailButton(event.id)));
+                row.append($('<td>').addClass('px-6 py-4').append(createEditButton(event.id)));
 
                 $('.table-body-event').append(row);
             });
         }
+
+
+        // function populateTable(events) {
+        //     console.log(events);
+        //     $('.table-body-event').empty();
+        //     events.forEach(event => {
+        //         let row = $('<tr>').addClass('bg-white border-t border-gray-300 hover:bg-gray-100');
+        //         $('<td>').addClass('px-6 py-4').text(event.tanggal).appendTo(row);
+        //         $('<td>').addClass('px-6 py-4').text(event.title).appendTo(row);
+        //         $('<td>').addClass('px-6 py-4').text(event.bidang).appendTo(row);
+        //         row.append(createDetailButton(event.id));
+        //         row.append(createEditButton(event.id));
+
+        //         $('.table-body-event').append(row);
+        //     });
+        // }
+
+        // function populateTable(events) {
+        //     $('.table-body-event').empty();
+        //     events.forEach(event => {
+        //         let row = $('<tr>')
+        //             .addClass('bg-white border-t border-gray-300 hover:bg-gray-100')
+        //             .attr('data-field-id', event.bidang.id); // Menyimpan id_bidang
+
+        //         $('<td>').addClass('px-6 py-4').text(event.tanggal).appendTo(row);
+        //         $('<td>').addClass('px-6 py-4').text(event.title).appendTo(row);
+        //         $('<td>').addClass('px-6 py-4').text(event.bidang.nama_bidang).appendTo(
+        //             row); // Menampilkan nama_bidang
+
+        //         row.append($('<td>').addClass('px-6 py-4').append(createDetailButton(event.id)));
+        //         row.append($('<td>').addClass('px-6 py-4').append(createEditButton(event.id)));
+
+        //         $('.table-body-event').append(row);
+        //     });
+        // }
+
 
         function filterEventsByField(fieldId) {
             $('.table-body-event tr').each(function() {

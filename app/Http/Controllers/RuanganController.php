@@ -30,25 +30,35 @@ class RuanganController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $request->validate([
             'nama_ruangan' => 'required|string|max:255',
-            'kapasitas' => 'required|integer|min:1',
-            'status' => 'required|string|in:tersedia,tidak tersedia',
+            'kapasitas' => 'required',
+            'status_ruang' => 'required',
+            'hari' => 'required|string|max:10',
+            'tanggal' => 'required',
+            'durasi_pemakaian' => 'required|integer|min:1|max:24',
         ]);
 
         try {
+
             Ruangan::create([
                 'nama_ruangan' => $request->nama_ruangan,
                 'kapasitas' => $request->kapasitas,
-                'status_ruang' => $request->status,
+                'status_ruang' => $request->status_ruang,
+                'hari' => $request->hari,
+                'tanggal' => $request->tanggal,
+                'durasi_pemakaian' => $request->durasi_pemakaian,
             ]);
+
 
             Session::flash('success', 'Ruangan Berhasil Ditambahkan');
         } catch (\Exception $e) {
             Session::flash('error', $e->getMessage());
         }
 
-        return redirect()->back();
+
+        return redirect('/admin/ruangan');
     }
 
     /**
@@ -56,7 +66,6 @@ class RuanganController extends Controller
      */
     public function show(Ruangan $ruangan)
     {
-        
     }
 
     /**
@@ -77,14 +86,20 @@ class RuanganController extends Controller
         $request->validate([
             'nama_ruangan' => 'required|string|max:255',
             'kapasitas' => 'required|integer|min:1',
-            'status' => 'required|string|in:tersedia,tidak tersedia',
+            'status_ruang' => 'required|string|in:tersedia,tidak tersedia',
+            'hari' => 'required|string|max:10',
+            'tanggal' => 'required|date|after_or_equal:today',
+            'durasi_pemakaian' => 'required|integer|min:1|max:24',
         ]);
 
         try {
             Ruangan::findOrFail($ruangan->id)->update([
                 'nama_ruangan' => $request->nama_ruangan,
                 'kapasitas' => $request->kapasitas,
-                'status_ruang' => $request->status,
+                'status_ruang' => $request->status_ruang,
+                'hari' => $request->hari,
+                'tanggal' => $request->tanggal,
+                'durasi_pemakaian' => $request->durasi_pemakaian,
             ]);
 
             Session::flash('success', 'Ruangan Berhasil Diubah');

@@ -70,8 +70,6 @@ Route::prefix('admin')
             Route::get('/events-by-data-range', 'getEventByDateRange')->name('get-event-by-date-range');
         });
         Route::resource('kelola-pegawai', PegawaiController::class);
-        Route::get('/admin/edit/{id}', [\App\Http\Controllers\PegawaiController::class, 'edit'])->name('admin.edit');
-        Route::put('/admin/{id}', [\App\Http\Controllers\PegawaiController::class, 'update']);
         Route::resource('cuti', CutiController::class);
         Route::resource('ruangan', RuanganController::class);
         Route::resource('pengumuman', PengumumanController::class);
@@ -101,15 +99,15 @@ Route::prefix('pegawai')
             Route::get('/events-by-data-range', 'getEventByDateRange')->name('get-event-by-date-range');
             Route::resource('ruangan', RuanganController::class)->only('index');
         });
-      
+
         Route::resource('kelola-pegawai', PegawaiController::class);
         Route::put('/pegawai/{id}', [\App\Http\Controllers\PegawaiController::class, 'update']);
         Route::resource('cuti', CutiController::class)->only(['index', 'create', 'store']);
     });
 
-    // Route::middleware('role:pegawai')->group(function () {
-    //     Route::resource('pegawai.kelola-pegawai', PegawaiController::class);
-    // });
+// Route::middleware('role:pegawai')->group(function () {
+//     Route::resource('pegawai.kelola-pegawai', PegawaiController::class);
+// });
 Route::prefix('kepala')
     ->middleware('auth', 'kepalapejabat')
     ->as('kepala.')

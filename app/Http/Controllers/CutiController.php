@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cuti;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class CutiController extends Controller
@@ -13,7 +14,16 @@ class CutiController extends Controller
      */
     public function index()
     {
-        $cuti = Cuti::with('pegawai')->orderBy('created_at', 'desc')->get();
+        $user = Auth::user();
+        $id_bidang = $user->pegawai->id_bidang;
+
+        // Ambil data cuti dari pegawai yang berada di bidang yang sama
+        $cuti = Cuti::with('pegawai')
+            ->whereHas('pegawai', function ($query) use ($id_bidang) {
+                $query->where('id_bidang', $id_bidang);
+            })
+            ->orderBy('created_at', 'desc')
+            ->get();
         return view('pages.cuti.index', compact('cuti'));
     }
 
@@ -40,7 +50,7 @@ class CutiController extends Controller
             'alasan' => 'required|string|max:255'
         ]);
 
-        try{
+        try {
             Cuti::create([
                 'jenis_cuti' => $request->jenis_cuti,
                 'id_pegawai' => $id_user,
@@ -52,12 +62,11 @@ class CutiController extends Controller
             ]);
 
             Session::flash('success', 'Cuti Berhasil Diajukan, Menunggu Persetujuan Admin');
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             Session::flash('error', $e->getMessage());
         }
 
         return redirect()->back();
-
     }
 
     /**

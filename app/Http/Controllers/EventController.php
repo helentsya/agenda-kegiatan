@@ -10,6 +10,8 @@ use Carbon\Carbon;
 use Carbon\Exceptions\InvalidFormatException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use PDF;
 
@@ -34,9 +36,28 @@ class EventController extends Controller
 
     public function showCalendarBidang(Request $request, $id)
     {
-        // if (session()->get('user') == null) return redirect()->route('login');
+        // Ambil user yang sedang login
+        $user = Auth::user();
+
+        // Ambil id_bidang dari user tersebut
+        $id_bidang_user = $user->pegawai->id_bidang;
+
+        // Cek apakah user adalah pegawai
+        if ($user->roles == 'pegawai') {
+            // Cek apakah id_bidang yang diminta sesuai dengan id_bidang user
+            if ($id_bidang_user != $id) {
+                // Jika tidak sesuai, tampilkan pesan atau arahkan ke halaman lain
+                return redirect()->route('home')->with('error', 'Anda tidak memiliki akses ke agenda bidang ini.');
+            }
+        }
+
+        // Temukan bidang berdasarkan id yang diberikan
         $bidang = Bidang::find($id);
+
+        // Ambil acara yang sesuai dengan id_bidang
         $events = Event::select(['title', 'start_event', 'end_event'])->where("id_bidang", $id)->get();
+
+        // Siapkan data acara untuk dikirim ke view
         $results = array();
         foreach ($events as $event) {
             $results[] = [
@@ -46,11 +67,14 @@ class EventController extends Controller
             ];
         }
 
+        // Kembalikan view dengan data acara dan bidang
         return view('pages.agenda-bidang', [
             'events' => $results,
-            "bidang" => $bidang,
+            'bidang' => $bidang,
         ]);
     }
+
+
 
     public function getEventsBidangByDate(Request $request)
     {
@@ -288,9 +312,11 @@ class EventController extends Controller
             $result = array();
             foreach ($events as $event) {
                 $tanggal = Carbon::parse($event->start_event);
+                $bidang = Bidang::find($event->id_bidang);
                 $tanggal->locale('id');
                 $result[] = [
                     'id' => $event->id,
+                    'bidang' => $bidang->nama_bidang,
                     'tanggal' => $tanggal->isoFormat('dddd, D MMMM YYYY'),
                     'title' => $event->title,
                 ];
@@ -362,17 +388,18 @@ class EventController extends Controller
     //Print
     public function getEventsByDateRange(Request $request)
     {
-        $mulaiTanggal = $request->query('mulai_tanggal');
-        $sampaiTanggal = $request->query('sampai_tanggal');
-        $bidangId = $request->query('bidang_id');
+        $mulaiTanggal = $request->input('mulai_tanggal');
+        $sampaiTanggal = $request->input('sampai_tanggal');
 
-        $query = Event::whereBetween('tanggal', [$mulaiTanggal, $sampaiTanggal]);
+        $events = Event::with('bidangs')
+            ->whereBetween('tanggal', [$mulaiTanggal, $sampaiTanggal])
+            ->get();
 
-        if ($bidangId) {
-            $query->where('bidang_id', $bidangId);
+        foreach ($events as $event) {
+            // Debugging data bidang
+            Log::info('Event ID: ' . $event->id);
+            Log::info('Bidang: ' . $event->bidang);
         }
-
-        $events = $query->get();
 
         return response()->json($events);
     }
