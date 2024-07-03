@@ -25,7 +25,7 @@
         </script>
     @endif
     <main id="main-content" class="bg-gray-100 ml-56  p-16 pt-8 min-h-screen">
-        <form class="py-4 px-8 bg-white rounded-md shadow-md" action="{{ route('edit-event-bidang') }}" method="post">
+        <form class="py-4 px-8 bg-white rounded-md shadow-md" action="{{ route('pegawai.edit-event-bidang') }}" method="post">
             @csrf
             <h1 class="mb-4  text-4xl text-center font-extrabold leading-none tracking-tight text-blue-500 ">
                 Edit Jadwal</h1>
@@ -116,7 +116,7 @@
                     & Waktu Berakhir
                 </label>
             </div>
-            <a href="{{ route('bidang.agenda', $id_bidang) }}"
+            <a href="{{ route('pegawai.bidang.agenda', $id_bidang) }}"
                 class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200">Kembali</a>
             <button type="submit"
                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none">Update</button>

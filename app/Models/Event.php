@@ -25,7 +25,7 @@ class Event extends Model
         'pakaian',
         'keterangan',
         'start_event',
-        // 'end_event'
+        'end_event'
         // 'tanggal'
     ];
 

@@ -1,37 +1,6 @@
 @extends('layouts.user')
 
 @section('content')
-    @php
-        // Determine the prefix based on the user's role
-$prefix = '';
-if (auth()->user()->roles == 'admin') {
-    $prefix = 'admin';
-} elseif (auth()->user()->roles == 'pegawai') {
-    $prefix = 'pegawai';
-} elseif (auth()->user()->roles == 'kepalapejabat') {
-    $prefix = 'kepala';
-        }
-    @endphp>
-
-    @if (Session::has('error'))
-        <script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: '{{ Session::get('error') }}',
-            });
-        </script>
-    @endif
-    @if (Session::has('success'))
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: '{{ Session::get('success') }}',
-                text: '',
-            });
-        </script>
-    @endif
-
     <main id="main-content" class="bg-gray-100 ml-56 p-4 min-h-screen">
         <h1 class="mb-4  text-2xl leading-none tracking-tight ">
             Agenda {{ $bidang->nama_bidang }}</h1>
@@ -71,9 +40,6 @@ if (auth()->user()->roles == 'admin') {
         </div>
 
     </main>
-    <script>
-        var baseUrl = "{{ url($prefix) }}";
-    </script>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
     <script>
         // Buat Komponen Button Kirim ke whatsapp 
@@ -171,7 +137,7 @@ if (auth()->user()->roles == 'admin') {
                 click: function() {
                     // Ajax GET request untuk mendapatkan detail event
                     $.ajax({
-                        url: '{{ route('event-bidang-detail') }}',
+                        url: '{{ route('pegawai.event-bidang-detail') }}',
                         type: 'GET',
                         data: {
                             id: eventId
@@ -213,7 +179,7 @@ if (auth()->user()->roles == 'admin') {
                 class: 'text-green-700 mt-2 mr-2 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-2 py-1 text-center ',
                 click: function() {
                     // Ajax GET request untuk mendapatkan detail event
-                    window.location.href = `${baseUrl}/edit-event-bidang/${eventId}`;
+                    window.location.href = `${baseUrl}/${eventId}`;
                 }
             });
             return button;
@@ -237,7 +203,7 @@ if (auth()->user()->roles == 'admin') {
                             // Jika tombol OK diklik, arahkan ke halaman utama
                             $.ajax({
                                 type: 'DELETE',
-                                url: `{{ route('delete-event-bidang') }}`, // Sesuaikan dengan URL dan parameter yang sesuai
+                                url: `{{ route('pegawai.delete-event-bidang') }}`, // Sesuaikan dengan URL dan parameter yang sesuai
                                 data: {
                                     _token: '{{ csrf_token() }}',
                                     id: eventId,
@@ -250,7 +216,7 @@ if (auth()->user()->roles == 'admin') {
                                         text: 'Acara telah dihapus.',
                                     }).then(() => {
                                         window.location.href =
-                                            `{{ route('bidang.agenda', $bidang->id) }}`;
+                                            `{{ route('pegawai.bidang.agenda', $bidang->id) }}`;
                                     });
 
                                 },
@@ -284,7 +250,7 @@ if (auth()->user()->roles == 'admin') {
                 dateClick: function(date, jsEvent, view) {
                     let clickedDate = date.dateStr;
                     $.ajax({
-                        url: '{{ route('event-bidang-by-date') }}',
+                        url: '{{ route('pegawai.event-bidang-by-date') }}',
                         type: 'GET',
                         data: {
                             date: clickedDate,
@@ -333,5 +299,8 @@ if (auth()->user()->roles == 'admin') {
             });
             calendar.render();
         });
+    </script>
+    <script>
+        const baseUrl = "{{ route('pegawai.edit-event-bidang') }}";
     </script>
 @endsection

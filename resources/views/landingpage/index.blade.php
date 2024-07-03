@@ -370,8 +370,8 @@
                                 <th>Dihadiri</th>
                                 <th>Pakaian</th>
                                 <th>Keterangan</th>
-                                <th>Start</th>
-                                <th>End</th>
+                                <th>Mulai</th>
+                                <th>Selesai</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -712,18 +712,31 @@
                     url: '/agenda/' + bidangId,
                     method: 'GET',
                     success: function(data) {
-                        var tableBody = modal.find('#agendaTable tbody');
+                        var tableBody = $('#agendaTable tbody');
                         tableBody.empty();
-                        data.forEach(function(event) {
-                            var row = '<tr><td>' + event.title + '</td><td>' + event
-                                .dihadiri + '</td><td>' + event.pakaian + '</td><td>' +
-                                event.keterangan + '</td><td>' + event
-                                .start_event + '</td><td>' + event.end_event +
-                                '</td></tr>';
+
+                        if (data.length === 0) {
+                            // Jika tidak ada event
+                            var row =
+                                '<tr><td colspan="6" class="text-center">Tidak ada jadwal agenda untuk hari ini.</td></tr>';
                             tableBody.append(row);
-                        });
+                        } else {
+                            // Jika ada event
+                            data.forEach(function(event) {
+                                var row = '<tr>' +
+                                    '<td>' + event.title + '</td>' +
+                                    '<td>' + event.dihadiri + '</td>' +
+                                    '<td>' + event.pakaian + '</td>' +
+                                    '<td>' + event.keterangan + '</td>' +
+                                    '<td>' + event.start_event + '</td>' +
+                                    '<td>' + event.end_event + '</td>' +
+                                    '</tr>';
+                                tableBody.append(row);
+                            });
+                        }
                     }
                 });
+
             });
         });
     </script>

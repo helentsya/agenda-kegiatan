@@ -41,7 +41,8 @@ class PegawaiController extends Controller
     {
 
         $bidang = Bidang::all();
-        if (auth()->user()->roles == 'admin'
+        if (
+            auth()->user()->roles == 'admin'
         ) {
             return view('pages.admin.create', compact('bidang'));
         } else {

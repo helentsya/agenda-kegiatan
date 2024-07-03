@@ -68,10 +68,17 @@ class EventController extends Controller
         }
 
         // Kembalikan view dengan data acara dan bidang
-        return view('pages.agenda-bidang', [
-            'events' => $results,
-            'bidang' => $bidang,
-        ]);
+        if (auth()->user()->roles == 'admin') {
+            return view('pages.agenda-bidang', [
+                'events' => $results,
+                'bidang' => $bidang,
+            ]);
+        } else {
+            return view('pages.pegawai.agenda-bidang', [
+                'events' => $results,
+                'bidang' => $bidang,
+            ]);
+        }
     }
 
 
@@ -113,18 +120,35 @@ class EventController extends Controller
             $event = Event::with('ruangan')->find($eventId);
             $ruangan = Ruangan::all();
             if ($event) {
-                return view('pages.edit_event_bidang', [
-                    'id_bidang' => $event->id_bidang,
-                    'id' => $eventId,
-                    'title' => $event->title,
-                    'tempat' => $event->ruangan->nama_ruangan,
-                    'dihadiri' => $event->dihadiri,
-                    'pakaian' => $event->pakaian,
-                    'keterangan' => $event->keterangan,
-                    'start_event' => $event->start_event,
-                    'ruangan' => $ruangan,
-                    'bidang' => Bidang::all(),
-                ]);
+                if (auth()->user()->roles == 'admin') {
+                    return view('pages.edit_event_bidang', [
+                        'id_bidang' => $event->id_bidang,
+                        'id' => $eventId,
+                        'title' => $event->title,
+                        'tempat' => $event->ruangan->nama_ruangan,
+                        'dihadiri' => $event->dihadiri,
+                        'pakaian' => $event->pakaian,
+                        'keterangan' => $event->keterangan,
+                        'start_event' => $event->start_event,
+                        'end_event' => $event->end_event,
+                        'ruangan' => $ruangan,
+                        'bidang' => Bidang::all(),
+                    ]);
+                } else {
+                    return view('pages.pegawai.edit_event_bidang', [
+                        'id_bidang' => $event->id_bidang,
+                        'id' => $eventId,
+                        'title' => $event->title,
+                        'tempat' => $event->ruangan->nama_ruangan,
+                        'dihadiri' => $event->dihadiri,
+                        'pakaian' => $event->pakaian,
+                        'keterangan' => $event->keterangan,
+                        'start_event' => $event->start_event,
+                        'end_event' => $event->end_event,
+                        'ruangan' => $ruangan,
+                        'bidang' => Bidang::all(),
+                    ]);
+                }
             } else {
                 abort(404);
             }
@@ -144,13 +168,17 @@ class EventController extends Controller
                 'pakaian' => $request->input('pakaian'),
                 'keterangan' => $request->input('keterangan'),
                 'start_event' => $request->input('start_event'),
+                'end_event' => $request->input('end_event'),
             ]);
             Session::flash('success', 'Data Berhasil Diupdate');
         } catch (QueryException $th) {
             Session::flash('error', 'Data Gagal Diupdate: ' . $th);
         }
-
-        return redirect()->route('bidang.agenda', $request->input('id_bidang'));
+        if (auth()->user() == 'admin') {
+            return redirect()->route('bidang.agenda', $request->input('id_bidang'));
+        } else {
+            return redirect()->route('pegawai.bidang.agenda', $request->input('id_bidang'));
+        }
     }
 
     // fungsi controller untuk mengembalikan nilai detail acara berdasarkan id acara
@@ -213,7 +241,11 @@ class EventController extends Controller
         $kategori = KategoriKegiatan::all();
         $ruangan = Ruangan::all();
         $bidang = Bidang::all();
-        return view('pages.store_event', compact('kategori', 'ruangan', 'bidang'));
+        if (auth()->user()->roles == 'admin') {
+            return view('pages.store_event', compact('kategori', 'ruangan', 'bidang'));
+        } else {
+            return view('pages.pegawai.store_event', compact('kategori', 'ruangan', 'bidang'));
+        }
     }
 
     // untuk mengelola ketika acara ditambahkan
@@ -228,6 +260,7 @@ class EventController extends Controller
                 'pakaian' => $request->input('pakaian'),
                 'keterangan' => $request->input('keterangan'),
                 'start_event' => $request->input('start_event'),
+                'end_event' => $request->input('end_event'),
                 'id_bidang' => $request->input('id_bidang'),
             ]);
             Session::flash('success', 'Data Berhasil Dimasukkan');
@@ -246,16 +279,31 @@ class EventController extends Controller
             $event = Event::with('ruangan')->find($eventId);
             $ruangan = Ruangan::all();
             if ($event) {
-                return view('pages.edit_event', [
-                    'id' => $eventId,
-                    'title' => $event->title,
-                    'tempat' => $event->ruangan->nama_ruangan,
-                    'dihadiri' => $event->dihadiri,
-                    'pakaian' => $event->pakaian,
-                    'keterangan' => $event->keterangan,
-                    'start_event' => $event->start_event,
-                    'ruangan' => $ruangan
-                ]);
+                if (auth()->user()->roles == 'admin') {
+                    return view('pages.edit_event', [
+                        'id' => $eventId,
+                        'title' => $event->title,
+                        'tempat' => $event->ruangan->nama_ruangan,
+                        'dihadiri' => $event->dihadiri,
+                        'pakaian' => $event->pakaian,
+                        'keterangan' => $event->keterangan,
+                        'start_event' => $event->start_event,
+                        'end_event' => $event->end_event,
+                        'ruangan' => $ruangan
+                    ]);
+                } else {
+                    return view('pages.pegawai.edit_event', [
+                        'id' => $eventId,
+                        'title' => $event->title,
+                        'tempat' => $event->ruangan->nama_ruangan,
+                        'dihadiri' => $event->dihadiri,
+                        'pakaian' => $event->pakaian,
+                        'keterangan' => $event->keterangan,
+                        'start_event' => $event->start_event,
+                        'end_event' => $event->end_event,
+                        'ruangan' => $ruangan
+                    ]);
+                }
             } else {
                 abort(404);
             }
@@ -274,6 +322,7 @@ class EventController extends Controller
                 'pakaian' => $request->input('pakaian'),
                 'keterangan' => $request->input('keterangan'),
                 'start_event' => $request->input('start_event'),
+                'end_event' => $request->input('end_event'),
             ]);
             Session::flash('success', 'Data Berhasil Diupdate');
         } catch (QueryException $th) {

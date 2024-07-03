@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Models\Pengumuman;
 use App\Models\Ruangan;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class LandingPageController extends Controller
@@ -18,7 +19,12 @@ class LandingPageController extends Controller
     }
     public function getAgendaByBidang($id_bidang)
     {
-        $events = Event::where('id_bidang', $id_bidang)->get();
+        $today = Carbon::today(); // Mengambil tanggal hari ini
+        $events = Event::where('id_bidang', $id_bidang)->where(function ($query) use ($today) {
+            $query->whereDate('start_event', '<=', $today)
+                ->whereDate('end_event', '>=', $today);
+        })
+            ->get();
         return response()->json($events);
     }
 }

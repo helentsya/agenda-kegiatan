@@ -87,6 +87,11 @@ Route::prefix('pegawai')
             Route::get('/', 'showCalendar')->name('pegawai.home');
 
             Route::get('/bidang/{id}/agenda', 'showCalendarBidang')->name('bidang.agenda');
+            Route::get('/events-bidang-by-date', 'getEventsBidangByDate')->name('event-bidang-by-date');
+            Route::get('/event-bidang-detail', 'getDetailEvent')->name('event-bidang-detail');
+            Route::delete('/delete-event-bidang', 'deleteEventBidang')->name('delete-event-bidang');
+            Route::get('/edit-event-bidang/{eventId}', 'showFormEditEventBidang')->name('show-edit-event-bidang');
+            Route::post('/edit-event-bidang', 'editEventBidang')->name('edit-event-bidang');
 
             Route::get('/add-event', 'showFormAddEvent')->name('show-add-event');
             Route::post('/add-event', 'storeEvent')->name('store-event');
