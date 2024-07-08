@@ -120,7 +120,7 @@ class EventController extends Controller
             $event = Event::with('ruangan')->find($eventId);
             $ruangan = Ruangan::all();
             if ($event) {
-                if (auth()->user()->roles == 'admin') {
+                if (auth()->user()->id_jabatan == '1') {
                     return view('pages.edit_event_bidang', [
                         'id_bidang' => $event->id_bidang,
                         'id' => $eventId,
@@ -174,7 +174,7 @@ class EventController extends Controller
         } catch (QueryException $th) {
             Session::flash('error', 'Data Gagal Diupdate: ' . $th);
         }
-        if (auth()->user() == 'admin') {
+        if (auth()->user()->id_jabatan == '1') {
             return redirect()->route('bidang.agenda', $request->input('id_bidang'));
         } else {
             return redirect()->route('pegawai.bidang.agenda', $request->input('id_bidang'));
@@ -405,13 +405,14 @@ class EventController extends Controller
             foreach ($uniqueDates as $date) {
                 $eventResults = array();
                 $events = Event::whereDate('start_event', $date)->get();
+                $ruangan = Ruangan::all();
                 foreach ($events as $event) {
                     $tanggal = Carbon::parse($event->start_event);
                     $tanggal->locale('id');
                     $eventResults[] = [
                         'id' => $event->id,
                         'title' => $event->title,
-                        'tempat' => $event->tempat,
+                        'tempat' => $event->ruangan->nama_ruangan,
                         'dihadiri' => $event->dihadiri,
                         'pakaian' => $event->pakaian,
                         'keterangan' => $event->keterangan,

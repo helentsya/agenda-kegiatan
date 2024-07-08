@@ -51,7 +51,7 @@
                                         <button
                                             class="text-red-700 mt-2 mr-2 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-2 py-1 text-center ">Hapus</button>
                                     </form>
-                                    
+
                                 </td>
                             </tr>
                         @empty

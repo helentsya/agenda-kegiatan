@@ -74,6 +74,7 @@ class PegawaiController extends Controller
             $user->password = Hash::make($request->password);
             $user->email = $request->email;
             $user->roles = "bidang";
+            // tabel baru jabatan
             $user->save();
 
             //  Pegawai::create([

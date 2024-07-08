@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\AdminPegawaiController;
 use App\Http\Controllers\CutiController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\PengumumanController;
@@ -44,6 +46,22 @@ Route::prefix('admin')
             Route::post('/whatsapp/delete_whatsapp', 'destroy')->name('whatsapp.destroy');
             Route::get('/whatsapp/get-formated-events', 'getFormatedEvents');
         });
+
+        Route::group(['prefix' => 'jabatans'], function () {
+            Route::get('/', [JabatanController::class, 'index'])->name('jabatans.index');
+            Route::get('/create', [JabatanController::class, 'create'])->name('jabatans.create');
+            Route::post('/', [JabatanController::class, 'store'])->name('jabatans.store');
+            Route::get('/edit/{id}', [JabatanController::class, 'edit'])->name('jabatans.edit');
+            Route::put('/{id}', [JabatanController::class, 'update'])->name('jabatans.update');
+            Route::delete('/{id}', [JabatanController::class, 'destroy'])->name('jabatans.destroy');
+        });
+
+        Route::get('users', [AdminPegawaiController::class, 'index'])->name('user.index');
+        Route::get('users/create', [AdminPegawaiController::class, 'create'])->name('user.create');
+        Route::post('users', [AdminPegawaiController::class, 'store'])->name('user.store');
+        Route::get('users/{id}/edit', [AdminPegawaiController::class, 'edit'])->name('user.edit');
+        Route::put('users/{id}', [AdminPegawaiController::class, 'update'])->name('user.update');
+        Route::delete('users/{id}', [AdminPegawaiController::class, 'destroy'])->name('user.destroy');
 
         Route::controller(EventController::class)->group(function () {
             Route::get('/', 'showCalendar')->name('home');

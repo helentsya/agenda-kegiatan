@@ -40,4 +40,8 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Bidang::class, 'id_bidang');
     }
+    public function jabatan()
+    {
+        return $this->belongsTo(Jabatan::class, 'id_jabatan', 'id_jabatan');
+    }
 }
