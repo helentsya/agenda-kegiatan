@@ -36,7 +36,7 @@
                                 Username
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Roles
+                                Jabatan
                             </th>
                             <th scope="col" class="px-6 py-3">
                                 Aksi
@@ -51,9 +51,12 @@
                                 <td class="px-6 py-4">{{ $item->bidang->nama_bidang }}</td>
                                 {{-- <td class="px-6 py-4"><span class="badge bg-primary">{{ $item->roles }}</td> --}}
                                 <td>{{ $item->user->username }}</td>
-                                <td>{{ $item->user->roles }}</td>
+                                <td>{{ $item->jabatan }}</td>
                                 <td class="px-6 py-4">
-
+                                    <a href="{{ route('kelola-pegawai.edit', $item->id) }}"
+                                        class="text-yellow-700 mt-2 mr-2 hover:text-white border border-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-2 py-1 text-center">
+                                        Edit
+                                    </a>
 
                                     <form method="POST" action="{{ route('kelola-pegawai.destroy', $item->id) }}">
                                         @method('DELETE')

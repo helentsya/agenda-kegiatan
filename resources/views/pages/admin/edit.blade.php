@@ -32,22 +32,13 @@
             <h1 class="mb-4 text-4xl text-center font-extrabold leading-none tracking-tight text-blue-500">
                 Edit Pegawai
             </h1>
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
 
             <div class="relative mb-4 w-full">
                 <select id="bidang" name="bidang"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     <option selected disabled>Pilih Bidang</option>
                     @foreach ($bidang as $item2)
-                        <option value="{{ $item2->id }}" {{ $pegawai->id_bidang == $item2->id ? 'selected' : '' }}>
+                        <option value="{{ $item2->id }}" {{ $users->id_bidang == $item2->id ? 'selected' : '' }}>
                             {{ $item2->nama_bidang }}</option>
                     @endforeach
                 </select>
@@ -55,7 +46,7 @@
             <div class="relative mb-4 w-full">
                 <input required type="text" id="nama_pegawai"
                     class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                    placeholder=" " name="nama_pegawai" value="{{ $pegawai->nama_pegawai }}" />
+                    placeholder=" " name="nama_pegawai" value="{{ $users->nama_user }}" />
                 <label for="nama_pegawai"
                     class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Nama
                     Pegawai
@@ -64,7 +55,7 @@
             <div class="relative mb-4 w-full">
                 <input required type="number" id="nip"
                     class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                    placeholder=" " name="nip" value="{{ $pegawai->nip }}" />
+                    placeholder=" " name="nip" value="{{ $users->pegawai->nip }}" />
                 <label for="nip"
                     class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">NIP
                 </label>
@@ -73,16 +64,18 @@
                 <select id="jenis_kelamin" name="jenis_kelamin"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     <option selected disabled>Pilih Jenis Kelamin</option>
-                    <option value="laki-laki" {{ $pegawai->jenis_kelamin == 'laki-laki' ? 'selected' : '' }}>Laki-Laki
+                    <option value="laki-laki" {{ $users->pegawai->jenis_kelamin == 'laki-laki' ? 'selected' : '' }}>
+                        Laki-Laki
                     </option>
-                    <option value="perempuan" {{ $pegawai->jenis_kelamin == 'perempuan' ? 'selected' : '' }}>Perempuan
+                    <option value="perempuan" {{ $users->pegawai->jenis_kelamin == 'perempuan' ? 'selected' : '' }}>
+                        Perempuan
                     </option>
                 </select>
             </div>
             <div class="relative mb-4 w-full">
                 <input required type="text" id="tempat_lahir"
                     class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                    placeholder=" " name="tempat_lahir" value="{{ $pegawai->tempat_lahir }}" />
+                    placeholder=" " name="tempat_lahir" value="{{ $users->pegawai->tempat_lahir }}" />
                 <label for="tempat_lahir"
                     class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Tempat
                     Lahir
@@ -91,24 +84,31 @@
             <div class="relative mb-4 w-full">
                 <input required type="date" id="tanggal_lahir"
                     class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                    placeholder=" " name="tanggal_lahir" value="{{ $pegawai->tanggal_lahir }}" />
+                    placeholder=" " name="tanggal_lahir" value="{{ $users->pegawai->tanggal_lahir }}" />
                 <label for="tanggal_lahir"
                     class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Tanggal
                     Lahir
                 </label>
             </div>
             <div class="relative mb-4 w-full">
-                <input required type="text" id="jabatan"
-                    class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                    placeholder=" " name="jabatan" value="{{ $pegawai->jabatan }}" />
-                <label for="jabatan"
+                <label for="floating_jabatan"
                     class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Jabatan
                 </label>
+                <select name="jabatan" id="jabatan"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">">
+                    <option value="" selected disabled>Pilih Jabatan</option>
+                    @foreach ($jabatans as $jabatan)
+                        <option value="{{ $jabatan->id_jabatan }}"
+                            {{ $jabatan->id_jabatan == $users->pegawai->id_jabatan ? 'selected' : '' }}>
+                            {{ $jabatan->nama_jabatan }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
             <div class="relative mb-4 w-full">
                 <input required type="text" id="alamat"
                     class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                    placeholder=" " name="alamat" value="{{ $pegawai->alamat }}" />
+                    placeholder=" " name="alamat" value="{{ $users->pegawai->alamat }}" />
                 <label for="alamat"
                     class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Alamat
                 </label>
@@ -117,13 +117,13 @@
             <div class="relative mb-4 w-full">
                 <input required type="text" id="username"
                     class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                    placeholder=" " name="username" value="{{ $pegawai->username }}" />
+                    placeholder=" " name="username" value="{{ $users->username }}" />
                 <label for="username"
                     class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Username
                 </label>
             </div>
             <div class="relative mb-4 w-full">
-                <input required type="password" id="password"
+                <input type="password" id="password"
                     class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     placeholder=" " name="password" />
                 <label for="password"
@@ -134,7 +134,7 @@
             <div class="relative mb-4 w-full">
                 <input required type="email" id="email"
                     class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                    placeholder=" " name="email" value="{{ $pegawai->email }}" />
+                    placeholder=" " name="email" value="{{ $users->email }}" />
                 <label for="email"
                     class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Email
                 </label>

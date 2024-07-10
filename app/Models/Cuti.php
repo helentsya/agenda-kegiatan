@@ -17,11 +17,17 @@ class Cuti extends Model
         'is_approved'
     ];
 
-    public function user() {
+    public function user()
+    {
         return $this->HasOne(User::class, 'id', 'user_id');
     }
 
-    public function pegawai() {
+    public function pegawai()
+    {
         return $this->belongsTo(Pegawai::class, 'id_pegawai');
+    }
+    public function bidang()
+    {
+        return $this->belongsTo(Bidang::class, 'id_bidang');
     }
 }

@@ -14,7 +14,7 @@ if (auth()->user()->roles == 'admin') {
     @endphp>
     <main id="main-content" class="bg-gray-100 ml-56 p-4 min-h-screen">
         <h1 class="mb-4  text-2xl leading-none tracking-tight ">
-            Halo, Selamat Datang Kembali {{ auth()->user()->username }}</h1>
+            Halo, Selamat Datang Kembali {{ auth()->user()->pegawai->jabatan }}</h1>
         <div class="" id="calendar"></div>
         {{-- <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-4">
     <table class="w-full text-sm text-left rtl:text-right text-gray-500">

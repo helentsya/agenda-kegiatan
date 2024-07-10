@@ -175,7 +175,7 @@
             </li>
 
 
-            @if (Auth::user()->id_bidang == '1')
+            @if (Auth::user()->id_bidang == '2')
                 <li class="px-2 pl-5">
                     <a class="flex pl-5 ml-2 rounded-md py-2 content-center hover:bg-[#5c6268]"
                         href="{{ route('pegawai.bidang.agenda', '1') }}">
@@ -188,7 +188,7 @@
                         <span class="text-sm text-white">Agenda Sekretariat</span>
                     </a>
                 </li>
-            @elseif (Auth::user()->id_bidang == '2')
+            @elseif (Auth::user()->id_bidang == '3')
                 <li class="px-2 pl-5">
                     <a class="flex pl-5 ml-2 rounded-md py-2 content-center hover:bg-[#5c6268]"
                         href="{{ route('pegawai.bidang.agenda', '2') }}">
@@ -201,7 +201,7 @@
                         <span class="text-sm text-white">Agenda Informatika</span>
                     </a>
                 </li>
-            @elseif (Auth::user()->id_bidang == '3')
+            @elseif (Auth::user()->id_bidang == '4')
                 <li class="px-2 pl-5">
                     <a class="flex pl-5 ml-2 rounded-md py-2 content-center hover:bg-[#5c6268]"
                         href="{{ route('pegawai.bidang.agenda', '3') }}">
@@ -214,7 +214,7 @@
                         <span class="text-sm text-white">Agenda Komunikasi</span>
                     </a>
                 </li>
-            @elseif (Auth::user()->id_bidang == '4')
+            @elseif (Auth::user()->id_bidang == '5')
                 <li class="px-2 pl-5">
                     <a class="flex pl-5 ml-2 rounded-md py-2 content-center hover:bg-[#5c6268]"
                         href="{{ route('pegawai.bidang.agenda', '4') }}">

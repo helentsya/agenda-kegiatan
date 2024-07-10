@@ -51,6 +51,7 @@ class AdminPegawaiController extends Controller
             $pegawai->jenis_kelamin = $request->jenis_kelamin;
             $pegawai->tempat_lahir = $request->tempat_lahir;
             $pegawai->tanggal_lahir = $request->tanggal_lahir;
+            $pegawai->jabatan = $request->jabatan;
             $pegawai->alamat = $request->alamat;
             // Cek apakah jabatan ditemukan
             $jabatan = Jabatan::find($request->jabatan);

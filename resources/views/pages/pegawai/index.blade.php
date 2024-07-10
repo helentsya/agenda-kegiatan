@@ -38,7 +38,7 @@
                             <th scope="col" class="px-6 py-3">Nip</th>
                             <th scope="col" class="px-6 py-3">Bidang</th>
                             <th scope="col" class="px-6 py-3">Username</th>
-                            <th scope="col" class="px-6 py-3">Roles</th>
+                            <th scope="col" class="px-6 py-3">Jabatan</th>
                             @if (auth()->user()->roles === 'admin' || auth()->user()->roles === 'pegawai')
                                 <th scope="col" class="px-6 py-3">Aksi</th>
                             @endif
@@ -51,7 +51,7 @@
                                 <td class="px-6 py-4">{{ $item->nip }}</td>
                                 <td class="px-6 py-4">{{ $item->bidang->nama_bidang }}</td>
                                 <td>{{ $item->user->username }}</td>
-                                <td>{{ $item->user->roles }}</td>
+                                <td>{{ $item->jabatan }}</td>
                                 <td class="px-6 py-4">
                                     @if (auth()->user()->roles === 'admin' || auth()->user()->roles === 'pegawai')
                                         <a href="{{ auth()->user()->roles === 'admin' ? route('kelola-pegawai.edit', $item->id) : route('pegawai.kelola-pegawai.edit', $item->id) }}"

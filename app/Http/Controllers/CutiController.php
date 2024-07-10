@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bidang;
 use App\Models\Cuti;
+use App\Models\Pegawai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -15,17 +17,31 @@ class CutiController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $id_bidang = $user->pegawai->id_bidang;
+        $bidang = Bidang::all();
+        $pegawai = Pegawai::all();
+        $id_bidang = $user->pegawai->id_bidang; // pastikan pegawai berelasi dengan user
 
-        // Ambil data cuti dari pegawai yang berada di bidang yang sama
-        $cuti = Cuti::with('pegawai')
-            ->whereHas('pegawai', function ($query) use ($id_bidang) {
-                $query->where('id_bidang', $id_bidang);
-            })
-            ->orderBy('created_at', 'desc')
-            ->get();
-        return view('pages.cuti.index', compact('cuti'));
+        if ($id_bidang == 0 || $id_bidang == 1) {
+            // Admin (id_bidang 0 atau 1) melihat semua data cuti
+            $cuti = Cuti::with('pegawai', 'bidang')->get();
+        } elseif ($id_bidang >= 2 && $id_bidang <= 5) {
+            // Admin (id_bidang 2 hingga 5) melihat data cuti dengan status is_approved 1
+            $cuti = Cuti::with('pegawai', 'bidang')
+                ->where('is_approved', 1)
+                ->get();
+        } else {
+            // Pegawai lainnya melihat data cuti yang sesuai dengan id_bidang mereka
+            $cuti = Cuti::with('pegawai', 'bidang')
+                ->whereHas('pegawai', function ($query) use ($id_bidang) {
+                    $query->where('id_bidang', $id_bidang);
+                })
+                ->orderBy('created_at', 'desc')
+                ->get();
+        }
+
+        return view('pages.cuti.index', compact('cuti', 'bidang', 'pegawai'));
     }
+
 
     /**
      * Show the form for creating a new resource.

@@ -14,4 +14,8 @@ class Bidang extends Model
     {
         return $this->hasMany(Event::class, 'id_bidang');
     }
+    public function cuti()
+    {
+        return $this->hasMany(Cuti::class, 'id_bidang');
+    }
 }
