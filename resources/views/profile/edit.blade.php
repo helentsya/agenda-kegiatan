@@ -1,6 +1,6 @@
 @extends('layouts.user');
 @section('content')
-    <div class="py-12">
+    <main id="main-content" class="bg-gray-100 ml-56 p-4 sm:p-8 md:p-12  lg:p-16 pt-8 min-h-screen">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                 <div class="max-w-xl">
@@ -20,5 +20,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 @endsection

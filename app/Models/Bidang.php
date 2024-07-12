@@ -18,4 +18,8 @@ class Bidang extends Model
     {
         return $this->hasMany(Cuti::class, 'id_bidang');
     }
+    public function pegawai()
+    {
+        return $this->hasMany(Pegawai::class, 'id');
+    }
 }

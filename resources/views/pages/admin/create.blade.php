@@ -35,7 +35,9 @@
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     <option selected disabled>Pilih Bidang</option>
                     @foreach ($bidang as $item2)
-                        <option value="{{ $item2->id }}">{{ $item2->nama_bidang }}</option>
+                        @if ($item2->id > 1)
+                            <option value="{{ $item2->id }}">{{ $item2->nama_bidang }}</option>
+                        @endif
                     @endforeach
                 </select>
             </div>
@@ -91,9 +93,7 @@
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">">
                     <option value="" selected disabled>Pilih Jabatan</option>
                     @foreach ($jabatans as $jabatan)
-                        @if ($jabatan->id_jabatan >= 6 && $jabatan->id_jabatan <= 10)
-                            <option value="{{ $jabatan->id_jabatan }}">{{ $jabatan->nama_jabatan }}</option>
-                        @endif
+                        <option value="{{ $jabatan->id_jabatan }}">{{ $jabatan->nama_jabatan }}</option>
                     @endforeach
                 </select>
             </div>

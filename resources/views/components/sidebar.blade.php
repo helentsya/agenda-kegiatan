@@ -36,18 +36,20 @@
                 </a>
             </li>
             @foreach ($bidang as $b)
-                <li class="px-2 pl-5">
-                    <a class="flex pl-5 ml-2 rounded-md py-2 content-center hover:bg-[#5c6268]"
-                        href="{{ route('bidang.agenda', $b->id) }}">
-                        <svg class="w-[16px] h-[16px] mr-2 text-white" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
-                            <path fill="#ffffff"
-                                d="M48 0C21.5 0 0 21.5 0 48V464c0 26.5 21.5 48 48 48h96V432c0-26.5 21.5-48 48-48s48 21.5 48 48v80h89.9c-6.3-10.2-9.9-22.2-9.9-35.1c0-46.9 25.8-87.8 64-109.2V271.8 48c0-26.5-21.5-48-48-48H48zM64 240c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V240zm112-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H176c-8.8 0-16-7.2-16-16V240c0-8.8 7.2-16 16-16zm80 16c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H272c-8.8 0-16-7.2-16-16V240zM80 96h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16zm80 16c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H176c-8.8 0-16-7.2-16-16V112zM272 96h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H272c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16zM576 272a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM352 477.1c0 19.3 15.6 34.9 34.9 34.9H605.1c19.3 0 34.9-15.6 34.9-34.9c0-51.4-41.7-93.1-93.1-93.1H445.1c-51.4 0-93.1 41.7-93.1 93.1z" />
-                        </svg>
-                        <span class="text-sm text-white">{{ $b->nama_bidang }}</span>
-                    </a>
-                </li>
+                @if ($b->id > 1)
+                    <li class="px-2 pl-5">
+                        <a class="flex pl-5 ml-2 rounded-md py-2 content-center hover:bg-[#5c6268]"
+                            href="{{ route('bidang.agenda', $b->id) }}">
+                            <svg class="w-[16px] h-[16px] mr-2 text-white" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                <path fill="#ffffff"
+                                    d="M48 0C21.5 0 0 21.5 0 48V464c0 26.5 21.5 48 48 48h96V432c0-26.5 21.5-48 48-48s48 21.5 48 48v80h89.9c-6.3-10.2-9.9-22.2-9.9-35.1c0-46.9 25.8-87.8 64-109.2V271.8 48c0-26.5-21.5-48-48-48H48zM64 240c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V240zm112-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H176c-8.8 0-16-7.2-16-16V240c0-8.8 7.2-16 16-16zm80 16c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H272c-8.8 0-16-7.2-16-16V240zM80 96h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16zm80 16c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H176c-8.8 0-16-7.2-16-16V112zM272 96h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H272c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16zM576 272a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM352 477.1c0 19.3 15.6 34.9 34.9 34.9H605.1c19.3 0 34.9-15.6 34.9-34.9c0-51.4-41.7-93.1-93.1-93.1H445.1c-51.4 0-93.1 41.7-93.1 93.1z" />
+                            </svg>
+                            <span class="text-sm text-white">{{ $b->nama_bidang }}</span>
+                        </a>
+                    </li>
+                @endif
             @endforeach
             <li class="px-2">
                 <a class="flex pl-4 rounded-md py-2 content-center hover:bg-[#5c6268]"
@@ -73,7 +75,7 @@
                     <span class="text-sm text-white">Kirim ke Whatsapp</span>
                 </a>
             </li>
-            <li class="px-2">
+            {{-- <li class="px-2">
                 <a class="flex pl-4 rounded-md py-2 content-center hover:bg-[#5c6268]" href="{{ route('user.index') }}">
                     <svg class="w-[20px] h-[16px] mr-2 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
@@ -82,7 +84,7 @@
                     </svg>
                     <span class="text-sm text-white">Kelola User</span>
                 </a>
-            </li>
+            </li> --}}
             <li class="px-2">
                 <a class="flex pl-4 rounded-md py-2 content-center hover:bg-[#5c6268]"
                     href="{{ route('kelola-pegawai.index') }}">
@@ -118,8 +120,7 @@
             <li class="px-2">
                 <a class="flex pl-4 rounded-md py-2 content-center hover:bg-[#5c6268]"
                     href="{{ route('ruangan.index') }}">
-                    <svg class="w-[20px] h-[16px] mr-2 text-white" aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
+                    <svg class="w-[20px] h-[16px] mr-2 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
                         <path fill="#ffffff"
                             d="M48 0C21.5 0 0 21.5 0 48V464c0 26.5 21.5 48 48 48h96V432c0-26.5 21.5-48 48-48s48 21.5 48 48v80h96c15.1 0 28.5-6.9 37.3-17.8C340.4 462.2 320 417.5 320 368c0-54.7 24.9-103.5 64-135.8V48c0-26.5-21.5-48-48-48H48zM64 240c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V240zm112-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H176c-8.8 0-16-7.2-16-16V240c0-8.8 7.2-16 16-16zm80 16c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H272c-8.8 0-16-7.2-16-16V240zM80 96h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16zm80 16c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H176c-8.8 0-16-7.2-16-16V112zM272 96h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H272c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16zM496 512a144 144 0 1 0 0-288 144 144 0 1 0 0 288zm0-96a24 24 0 1 1 0 48 24 24 0 1 1 0-48zm0-144c8.8 0 16 7.2 16 16v80c0 8.8-7.2 16-16 16s-16-7.2-16-16V288c0-8.8 7.2-16 16-16z" />
@@ -178,7 +179,7 @@
             @if (Auth::user()->id_bidang == '2')
                 <li class="px-2 pl-5">
                     <a class="flex pl-5 ml-2 rounded-md py-2 content-center hover:bg-[#5c6268]"
-                        href="{{ route('pegawai.bidang.agenda', '1') }}">
+                        href="{{ route('pegawai.bidang.agenda', '2') }}">
                         <svg class="w-[16px] h-[16px] mr-2 text-white" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
@@ -191,7 +192,7 @@
             @elseif (Auth::user()->id_bidang == '3')
                 <li class="px-2 pl-5">
                     <a class="flex pl-5 ml-2 rounded-md py-2 content-center hover:bg-[#5c6268]"
-                        href="{{ route('pegawai.bidang.agenda', '2') }}">
+                        href="{{ route('pegawai.bidang.agenda', '3') }}">
                         <svg class="w-[16px] h-[16px] mr-2 text-white" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
@@ -204,7 +205,7 @@
             @elseif (Auth::user()->id_bidang == '4')
                 <li class="px-2 pl-5">
                     <a class="flex pl-5 ml-2 rounded-md py-2 content-center hover:bg-[#5c6268]"
-                        href="{{ route('pegawai.bidang.agenda', '3') }}">
+                        href="{{ route('pegawai.bidang.agenda', '4') }}">
                         <svg class="w-[16px] h-[16px] mr-2 text-white" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
@@ -217,7 +218,7 @@
             @elseif (Auth::user()->id_bidang == '5')
                 <li class="px-2 pl-5">
                     <a class="flex pl-5 ml-2 rounded-md py-2 content-center hover:bg-[#5c6268]"
-                        href="{{ route('pegawai.bidang.agenda', '4') }}">
+                        href="{{ route('pegawai.bidang.agenda', '5') }}">
                         <svg class="w-[16px] h-[16px] mr-2 text-white" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
@@ -289,6 +290,7 @@
                     <span class="text-sm text-white">Lihat Agenda</span>
                 </a>
                 @foreach ($bidang as $b)
+                    @if ($b->id > 1)
             <li class="px-2 pl-5">
                 <a class="flex pl-5 ml-2 rounded-md py-2 content-center hover:bg-[#5c6268]"
                     href="{{ route('kepala.bidang.agenda', $b->id) }}">
@@ -301,6 +303,7 @@
                     <span class="text-sm text-white">{{ $b->nama_bidang }}</span>
                 </a>
             </li>
+        @endif
         @endforeach
         </li>
         <li class="px-2">

@@ -1,4 +1,4 @@
-<header class="border-b pb-4 mb-4">
+<header class="border-b">
     <h2 class="text-2xl font-semibold text-gray-800">
         {{ __('Informasi Akun') }}
     </h2>

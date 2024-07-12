@@ -18,34 +18,29 @@ class PegawaiController extends Controller
      * Display a listing of the resource.
      */
 
-    public function index()
+    public function index(Request $request)
     {
-        // $user = Auth::user();
-
-        // if ($user->roles == 'admin') {
-        //     $pegawai = Pegawai::with('bidang')->get();
-        //     return view('pages.admin.index', compact('pegawai'));
-        // } elseif ($user->roles == 'kepalapejabat') {
-        //     $pegawai = Pegawai::with('bidang')->get();
-        // } else {
-        //     $pegawai = Pegawai::with('bidang')->where('id_bidang', $user->id_bidang)->get();
-        // }
-
         $user = Auth::user();
-
+        $id_bidang_filter = $request->get('id_bidang');
+        $users = User::all();
         if ($user->id_bidang == 0) {
-            $pegawai = Pegawai::with('bidang')->get();
-            return view('pages.admin.index', compact('pegawai'));
-        } elseif ($user->id_bidang == 2) {
-            $pegawai = Pegawai::with('bidang')->get();
-            return view('pages.pegawai.index', compact('pegawai'));
+            $query = Pegawai::with('bidang')->where('id_bidang', '>', 1);
+        } elseif ($user->roles == 'kepalapejabat') {
+            $query = Pegawai::with('bidang')->where('id_bidang', '>', 1);
         } else {
-            $pegawai = Pegawai::with('bidang')->where('id_bidang', $user->id_bidang)->get();
-            return view('pages.pegawai.index', compact('pegawai'));
+            $query = Pegawai::with('bidang')->where('id_bidang', $user->id_bidang);
         }
 
-        // return view('pages.pegawai.index', compact('pegawai'));
+        if ($id_bidang_filter) {
+            $query->where('id_bidang', $id_bidang_filter);
+        }
+
+        $pegawai = $query->paginate(10); // Gunakan paginate untuk pagination
+        $bidangs = Bidang::all(); // Menambahkan ini untuk mendapatkan data bidang untuk dropdown filter
+
+        return view('pages.pegawai.index', compact('pegawai', 'bidangs', 'users'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -97,9 +92,12 @@ class PegawaiController extends Controller
 
             if ($request->jabatan >= 2 && $request->jabatan <= 6) {
                 $user->roles = "pegawai";
+            } elseif ($request->jabatan == 2) {
+                $user->roles = "kepalapejabat";
             } else {
                 $user->roles = "bidang";
             }
+
             $user->save();
 
             //  Pegawai::create([

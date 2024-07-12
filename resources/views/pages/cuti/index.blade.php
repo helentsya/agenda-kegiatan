@@ -100,6 +100,9 @@
                     </tbody>
                 </table>
             </div>
+            {{-- <div class="mt-4">
+                {{ $cutis->links('vendor.pagination.tailwind') }}
+            </div> --}}
         </div>
     </main>
 @endsection
