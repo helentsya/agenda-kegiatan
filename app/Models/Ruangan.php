@@ -18,4 +18,9 @@ class Ruangan extends Model
         'tanggal',
         'durasi_pemakaian'
     ];
+
+    public function events()
+    {
+        return $this->hasMany(Event::class, 'id_ruangan');
+    }
 }

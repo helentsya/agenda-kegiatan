@@ -139,8 +139,12 @@ Route::prefix('kepala')
             Route::get('/', 'showCalendar')->name('kepala.home');
             Route::get('/bidang/{id}/agenda', 'showCalendarBidang')->name('bidang.agenda');
 
-            Route::get('/detail-event', 'getDetailEvent')->name('detail-event');
-            Route::get('/events-by-date', 'getEventsByDate')->name('event-by-date');
+            Route::get('/event-bidang-detail', 'getDetailEvent')->name('event-bidang-detail');
+            Route::get('/events-bidang-by-date', 'getEventsBidangByDate')->name('event-bidang-by-date');
+            //baru
+            Route::post('/edit-event-bidang', 'editEventBidang')->name('edit-event-bidang');
+            Route::delete('/delete-event-bidang', 'deleteEventBidang')->name('delete-event-bidang');
+            Route::get('/edit-event-bidang/{eventId}', 'showFormEditEventBidang')->name('show-edit-event-bidang');
 
             Route::get('/edit-event/{eventId}', 'showFormEditEvent')->name('show-edit-event');
             Route::post('/edit-event', 'editEvent')->name('edit-event');

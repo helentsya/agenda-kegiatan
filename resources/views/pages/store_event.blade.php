@@ -35,7 +35,9 @@
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     <option selected disabled>Pilih Bidang</option>
                     @foreach ($bidang as $item1)
-                        <option value="{{ $item1->id }}">{{ $item1->nama_bidang }}</option>
+                        @if ($item1->id > 1)
+                            <option value="{{ $item1->id }}">{{ $item1->nama_bidang }}</option>
+                        @endif
                     @endforeach
                 </select>
             </div>

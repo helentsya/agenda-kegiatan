@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\Bidang;
+use App\Models\Ruangan;
 use Illuminate\Http\Request;
 use App\Models\Whatsapp;
 use Carbon\Carbon;
@@ -76,12 +77,13 @@ class WhatsappController extends Controller
                 $eventNumber = $index + 1;
 
                 $bidang = Bidang::find($event->id_bidang);
+                $ruangan = Ruangan::find($event->id_ruangan);
 
                 $eventResults[] = [
                     "var_bidang" => $bidang->nama_bidang,
                     "var_tanggal" => $eventDate->isoFormat('dddd, D MMMM YYYY'),
                     "var_agenda" => $eventNumber,
-                    "var_pukul" => "$eventTime WITA. Di $event->tempat.",
+                    "var_pukul" => "$eventTime WITA. Di $ruangan->nama_ruangan.",
                     "var_acara" => $event->title,
                     "var_dihadiri" => "*$event->dihadiri*",
                     "var_pakaian" => $event->pakaian,
