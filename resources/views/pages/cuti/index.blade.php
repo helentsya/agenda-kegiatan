@@ -24,7 +24,7 @@
         <div class="card-table-events rounded-md border  bg-white shadow-lg my-4 p-8">
             <div class="flex justify-between">
                 <h2 class="font-bold text-xl">Kelola Cuti Pegawai</h2>
-                @if (!Auth::user()->roles != 'kepala pejabat')
+                @if (auth()->user()->roles != 'kepalapejabat' && auth()->user()->roles != 'admin')
                     <a href="{{ route('pegawai.cuti.create') }}"
                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Tambah
                         Cuti</a>

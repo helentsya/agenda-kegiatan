@@ -1,3 +1,6 @@
+@php
+    use Carbon\Carbon;
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,8 +27,68 @@
     <link rel="stylesheet" href="{{ asset('css/menu_sideslide.css') }}">
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
+
+    {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script> --}}
+
     <link rel="shortcut icon" href="http://diskominfo.banjarbarukota.go.id/oriz/favicon.ico">
 </head>
+<style>
+    .custom-table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        border-radius: 8px;
+    }
+
+    .custom-table th,
+    .custom-table td {
+        padding: 15px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+
+    .custom-table th {
+        background-color: #4CAF50;
+        color: white;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    .custom-table tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .custom-table tr:hover {
+        background-color: #e0e0e0;
+    }
+
+    .section-header h2 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #333;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .card-table-events {
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+    }
+
+    .card-table-events h2 {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #333;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+</style>
 
 <body>
     <div class="menu-wrap">
@@ -73,7 +136,7 @@
         <div class="fixed-top">
             <div class="container">
                 <div class="logo-menu">
-                    <a href="/"> <img src="/img/logo-white.png" height=30px></a>
+                    <a href="/"> <img src="/img/logo-white.png" height=50px></a>
                     <button class="menu-button" id="open-button"><i class="lnr lnr-menu"></i></button>
                 </div>
             </div>
@@ -239,67 +302,44 @@
                 <p class="section-subtitle wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s"> </p>
             </div>
             <div class="row">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                    <div class="content-left text-right wow fadeInLeft animated" data-wow-offset="10">
-                        <div class="box-item left">
-                            <span class="icon">
-                                <a href="#" data-toggle="modal" data-target="#agendaModal" data-bidang="1"><i
-                                        class="lnr lnr-rocket"></i></a>
-                            </span>
-                            <div class="text">
-                                <h4>Agenda Sekretariat</h4>
-                                <p>Berisi agenda Sekretariat.</p>
-                            </div>
+                <div class="col-12">
+                    <div class="card-table-events rounded-md border bg-white shadow-lg my-4 p-8">
+                        <h2 class="font-bold text-2xl text-center mb-4">Agenda Hari Ini</h2>
+                        <div class="overflow-x-auto">
+                            <table class="custom-table">
+                                <thead>
+                                    <tr>
+                                        <th>Tanggal</th>
+                                        <th>Waktu</th>
+                                        <th>Tempat</th>
+                                        <th>Kegiatan</th>
+                                        <th>Keterangan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($events as $event)
+                                        @php
+                                            $startDate = Carbon::parse($event->start_event)->format('d M Y');
+                                            $startTime = Carbon::parse($event->start_event)->format('H:i');
+                                        @endphp
+                                        <tr>
+                                            <td>{{ $startDate }}</td>
+                                            <td>{{ $startTime }}</td>
+                                            <td>{{ $event->ruangan->nama_ruangan }}</td>
+                                            <td>{{ $event->title }}</td>
+                                            <td>{{ $event->keterangan }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="box-item left">
-                            <span class="icon">
-                                <a href="#" data-toggle="modal" data-target="#agendaModal" data-bidang="2"><i
-                                        class="lnr lnr-laptop-phone"></i></a>
-                            </span>
-                            <div class="text">
-                                <h4>Agenda Informatika</h4>
-                                <p>Berisi agenda Informatika.</p>
-                            </div>
-                        </div>
-
-
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                    <div class="show-box wow fadeInDown animated" data-wow-offset="10">
-                        <img src="/img/features/gg.gif" alt=""><br>
-                        <img src="/img/features/tugu.png" alt="">
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                    <div class="content-right text-left wow fadeInRight animated" data-wow-offset="10">
-                        <div class="box-item right">
-                            <span class="icon">
-                                <a href="#" data-toggle="modal" data-target="#agendaModal" data-bidang="3"><i
-                                        class="lnr lnr-camera-video"></i></a>
-                            </span>
-                            <div class="text">
-                                <h4>Agenda Komunikasi</h4>
-                                <p>Berisi agenda Komunikasi.</p>
-                            </div>
-                        </div>
-
-                        <div class="box-item right">
-                            <span class="icon">
-                                <a href="#" data-toggle="modal" data-target="#agendaModal" data-bidang="4"><i
-                                        class="lnr lnr-layers"></i></a>
-                            </span>
-                            <div class="text">
-                                <h4>Agenda Persandian</h4>
-                                <p>Berisi agenda bidang Persandian.</p>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+
 
     <section id="pengumuman" class="section" data-stellar-background-ratio="0.2">
         <div class="container">
@@ -313,7 +353,7 @@
                 @foreach ($pengumuman as $item)
                     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 mb-4">
                         <div class="pengumuman-box show-box wow fadeInDown animated" data-wow-offset="10"
-                            style="padding: 20px;">
+                            style="padding: 10px;">
                             <img src="/images/diskominfo.jpg" style="width: 100%;" alt="">
                             <h4>{{ $item->judul_pengumuman }}</h4>
                             <p>{{ $item->isi_pengumuman }}</p>
@@ -339,7 +379,7 @@
                     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                         <div class="ruangan-box show-box wow fadeInDown animated" data-wow-offset="10">
                             <img src="/images/building.svg" style="width: 100%;" alt="">
-                            <h4>{{ $room->nama_ruangan }}</h4>
+                            <h4 class="text-center">{{ $room->nama_ruangan }}</h4>
                             <p>Kapasitas: {{ $room->kapasitas }}</p>
                             <p>Status: {{ $room->status_ruang }}</p>
                         </div>
@@ -352,7 +392,7 @@
     <!-- Features Section End -->
 
     <!-- Modal -->
-    <div class="modal fade" id="agendaModal" tabindex="-1" role="dialog" aria-labelledby="agendaModalLabel"
+    {{-- <div class="modal fade" id="agendaModal" tabindex="-1" role="dialog" aria-labelledby="agendaModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -381,7 +421,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <!-- Contact Section Start -->
 
@@ -681,7 +721,7 @@
 
         });
     </script>
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             $('#agendaModal').on('show.bs.modal', function(event) {
                 var button = $(event.relatedTarget);
@@ -739,7 +779,7 @@
 
             });
         });
-    </script>
+    </script> --}}
 </body>
 
 </html>

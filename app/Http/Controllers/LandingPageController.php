@@ -14,8 +14,14 @@ class LandingPageController extends Controller
     {
         $pengumuman = Pengumuman::orderBy('created_at', 'desc')->limit(3)->get(); // Misalnya 3 pengumuman terbaru
         $ruangan = Ruangan::orderBy('nama_ruangan', 'asc')->get();
+        $today = Carbon::today(); // Mengambil tanggal hari ini
+        $events = Event::where(function ($query) use ($today) {
+            $query->whereDate('start_event', '<=', $today)
+                ->whereDate('end_event', '>=', $today);
+        })
+            ->get();
 
-        return view('landingpage.index', compact('pengumuman', 'ruangan'));
+        return view('landingpage.index', compact('pengumuman', 'ruangan', 'events'));
     }
     public function getAgendaByBidang($id_bidang)
     {
@@ -25,6 +31,9 @@ class LandingPageController extends Controller
                 ->whereDate('end_event', '>=', $today);
         })
             ->get();
+        // $eventDate = Carbon::parse($events->start_event);
+        // $eventDate->setLocale('id');
+        // $eventTime = $eventDate->isoFormat('h:m');
         return response()->json($events);
     }
 }

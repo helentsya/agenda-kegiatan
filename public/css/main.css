@@ -480,12 +480,12 @@ a:not([href]):not([tabindex]):hover {
 .pengumuman-box {
   display: flex;
   flex-direction: column;
-  gap: 10px; /* Menambahkan jarak antar elemen di dalam pengumuman */
+  gap: 3px; /* Menambahkan jarak antar elemen di dalam pengumuman */
 }
 .ruangan-box {
   display: flex;
   flex-direction: column;
-  gap: 10px; /* Menambahkan jarak antar elemen di dalam pengumuman */
+  gap: 3px; /* Menambahkan jarak antar elemen di dalam pengumuman */
 }
 /* ==========================================================================
    Screenshots Section Start
