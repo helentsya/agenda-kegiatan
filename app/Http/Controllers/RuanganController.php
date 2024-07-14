@@ -34,10 +34,6 @@ class RuanganController extends Controller
         $request->validate([
             'nama_ruangan' => 'required|string|max:255',
             'kapasitas' => 'required',
-            'status_ruang' => 'required',
-            'hari' => 'required|string|max:10',
-            'tanggal' => 'required',
-            'durasi_pemakaian' => 'required|integer|min:1|max:24',
         ]);
 
         try {
@@ -45,10 +41,6 @@ class RuanganController extends Controller
             Ruangan::create([
                 'nama_ruangan' => $request->nama_ruangan,
                 'kapasitas' => $request->kapasitas,
-                'status_ruang' => $request->status_ruang,
-                'hari' => $request->hari,
-                'tanggal' => $request->tanggal,
-                'durasi_pemakaian' => $request->durasi_pemakaian,
             ]);
 
 
@@ -86,20 +78,12 @@ class RuanganController extends Controller
         $request->validate([
             'nama_ruangan' => 'required|string|max:255',
             'kapasitas' => 'required|integer|min:1',
-            'status_ruang' => 'required|string|in:tersedia,tidak tersedia',
-            'hari' => 'required|string|max:10',
-            'tanggal' => 'required|date|after_or_equal:today',
-            'durasi_pemakaian' => 'required|integer|min:1|max:24',
         ]);
 
         try {
             Ruangan::findOrFail($ruangan->id)->update([
                 'nama_ruangan' => $request->nama_ruangan,
                 'kapasitas' => $request->kapasitas,
-                'status_ruang' => $request->status_ruang,
-                'hari' => $request->hari,
-                'tanggal' => $request->tanggal,
-                'durasi_pemakaian' => $request->durasi_pemakaian,
             ]);
 
             Session::flash('success', 'Ruangan Berhasil Diubah');

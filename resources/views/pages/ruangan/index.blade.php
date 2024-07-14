@@ -27,10 +27,6 @@
                         <tr>
                             <th scope="col" class="px-6 py-3">Nama Ruangan</th>
                             <th scope="col" class="px-6 py-3">Kapasitas</th>
-                            <th scope="col" class="px-6 py-3">Hari</th>
-                            <th scope="col" class="px-6 py-3">Tanggal</th>
-                            <th scope="col" class="px-6 py-3">Durasi Pemakaian (Jam)</th>
-                            <th scope="col" class="px-6 py-3">Status</th>
                             @if (auth()->user()->roles == 'admin')
                                 <th scope="col" class="px-6 py-3">Aksi</th>
                             @endif
@@ -41,18 +37,6 @@
                             <tr class="bg-white border-t border-gray-300 hover:bg-gray-100">
                                 <td class="px-6 py-4">{{ $item->nama_ruangan }}</td>
                                 <td class="px-6 py-4">{{ $item->kapasitas }}</td>
-                                <td class="px-6 py-4">{{ $item->hari }}</td>
-                                <td class="px-6 py-4">{{ $item->tanggal }}</td>
-                                <td class="px-6 py-4">{{ $item->durasi_pemakaian }}</td>
-                                <td class="px-6 py-4">
-                                    @if ($item->status_ruang == 'tersedia')
-                                        <span
-                                            class="badge bg-green-200 px-2.5 py-1.5 rounded-full text-black capitalize">{{ $item->status_ruang }}</span>
-                                    @else
-                                        <span
-                                            class="badge bg-red-200 px-2.5 py-1.5 rounded-full text-black capitalize">{{ $item->status_ruang }}</span>
-                                    @endif
-                                </td>
                                 @if (auth()->user()->roles == 'admin')
                                     <td class="px-6 py-4 flex">
                                         <a href="{{ route('ruangan.edit', $item->id) }}"

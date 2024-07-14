@@ -294,6 +294,10 @@
     <section id="features" class="section" data-stellar-background-ratio="0.2">
         <div class="container">
             <div class="section-header">
+                <div class="logo-menu text-center">
+                    <a class="center" href="/"> <img src="/img/features/gg.gif" height=100px></a>
+                </div>
+                <br>
                 <br>
                 <h2 class="section-title wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">Agenda
                     <span>Kami</span>

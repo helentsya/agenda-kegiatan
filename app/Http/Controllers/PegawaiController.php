@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 
@@ -38,7 +39,11 @@ class PegawaiController extends Controller
         $pegawai = $query->paginate(10); // Gunakan paginate untuk pagination
         $bidangs = Bidang::all(); // Menambahkan ini untuk mendapatkan data bidang untuk dropdown filter
 
-        return view('pages.pegawai.index', compact('pegawai', 'bidangs', 'users'));
+        if (auth()->user()->id_jabatan == 0) {
+            return view('pages.admin.index', compact('pegawai', 'bidangs', 'users'));
+        } else {
+            return view('pages.pegawai.index', compact('pegawai', 'bidangs', 'users'));
+        }
     }
 
 
@@ -221,9 +226,19 @@ class PegawaiController extends Controller
      */
     public function destroy(string $id)
     {
-        $data = User::findOrFail($id);
+        DB::transaction(function () use ($id) {
+            // Hapus dari tabel 'users'
+            $user = User::findOrFail($id);
+            $user->delete();
 
-        $data->delete();
+            // Hapus dari tabel 'pegawai' berdasarkan user_id
+            $pegawai = Pegawai::findOrFail($id);
+            $pegawai->delete();
+
+            // Jika semua operasi berhasil, maka commit transaction
+            DB::commit();
+        }, 5); // 5 is the number of times to attempt the transaction
+
         Session::flash('success', 'Data Berhasil Dihapus');
         return redirect()->back();
     }

@@ -80,6 +80,9 @@
                     </tbody>
                 </table>
             </div>
+            <div class="mt-4">
+                {{ $pegawai->appends(['id_bidang' => request('id_bidang')])->links('vendor.pagination.tailwind') }}
+            </div>
         </div>
     </main>
 @endsection

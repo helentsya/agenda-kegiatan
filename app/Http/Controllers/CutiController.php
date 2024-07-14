@@ -21,8 +21,11 @@ class CutiController extends Controller
         $pegawai = Pegawai::all();
         $id_bidang = $user->pegawai->id_bidang; // pastikan pegawai berelasi dengan user
 
-        if ($id_bidang == 0 || $id_bidang == 1) {
-            // Admin (id_bidang 0 atau 1) melihat semua data cuti
+        if ($user->roles == 'admin') {
+            // Admin melihat semua data cuti
+            $cuti = Cuti::with('pegawai', 'bidang')->get();
+        } elseif ($user->roles == 'kepalapejabat') {
+            // Kepalapejabat melihat semua data cuti dengan status is_approved 1
             $cuti = Cuti::with('pegawai', 'bidang')->get();
         } elseif ($id_bidang >= 2 && $id_bidang <= 5) {
             // Admin (id_bidang 2 hingga 5) melihat data cuti dengan status is_approved 1

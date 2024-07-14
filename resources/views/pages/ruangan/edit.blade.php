@@ -47,42 +47,6 @@
                 <label for="kapasitas"
                     class="absolute text-sm text-gray-500 transform -translate-y-4 scale-75 top-2 z-10 bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75">Kapasitas</label>
             </div>
-
-            <div class="relative mb-4 w-full">
-                <label for="status_ruang" class="block mb-2 text-sm font-medium text-gray-900">Status</label>
-                <select id="status_ruang" name="status_ruang"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5">
-                    <option value="tersedia" {{ $ruangan->status_ruang == 'tersedia' ? 'selected' : '' }}>Tersedia</option>
-                    <option value="tidak tersedia" {{ $ruangan->status_ruang == 'tidak tersedia' ? 'selected' : '' }}>Tidak
-                        Tersedia</option>
-                </select>
-            </div>
-
-            <div class="relative mb-4 w-full">
-                <input required type="text" id="hari"
-                    class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                    value="{{ $ruangan->hari }}" name="hari" />
-                <label for="hari"
-                    class="absolute text-sm text-gray-500 transform -translate-y-4 scale-75 top-2 z-10 bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75">Hari</label>
-            </div>
-
-            <div class="relative mb-4 w-full">
-                <input required type="date" id="tanggal"
-                    class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                    value="{{ $ruangan->tanggal }}" name="tanggal" />
-                <label for="tanggal"
-                    class="absolute text-sm text-gray-500 transform -translate-y-4 scale-75 top-2 z-10 bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75">Tanggal</label>
-            </div>
-
-            <div class="relative mb-4 w-full">
-                <input required type="number" id="durasi_pemakaian"
-                    class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                    value="{{ $ruangan->durasi_pemakaian }}" name="durasi_pemakaian" />
-                <label for="durasi_pemakaian"
-                    class="absolute text-sm text-gray-500 transform -translate-y-4 scale-75 top-2 z-10 bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75">Durasi
-                    Pemakaian (Jam)</label>
-            </div>
-
             <a href="{{ route('ruangan.index') }}"
                 class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:ring-4 focus:ring-gray-200">Kembali</a>
             <button type="submit"
