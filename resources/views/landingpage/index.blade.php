@@ -119,11 +119,15 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#subscribe">Hubungi Kami</a>
                     </li>
-                    <li class="nav-item">
+                    @guest
                         <a href="{{ route('login') }}" class="btn btn-primary">
                             <i class="fa fa-sign-in"></i> Login
                         </a>
-                    </li>
+                    @else
+                        <a href="{{ url()->previous() }}" class="btn btn-primary">
+                            <i class="fa fa-arrow-left"></i> Kembali
+                        </a>
+                    @endguest
                 </ul>
             </div>
         </nav>
@@ -318,6 +322,8 @@
                                         <th>Tempat</th>
                                         <th>Kegiatan</th>
                                         <th>Keterangan</th>
+                                        <th>Mulai</th>
+                                        <th>Selesai</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -332,6 +338,8 @@
                                             <td>{{ $event->ruangan->nama_ruangan }}</td>
                                             <td>{{ $event->title }}</td>
                                             <td>{{ $event->keterangan }}</td>
+                                            <td>{{ $event->start_event }}</td>
+                                            <td>{{ $event->end_event }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -355,13 +363,16 @@
             </div>
             <div class="row">
                 @foreach ($pengumuman as $item)
+                    @php
+                        $startDate = Carbon::parse($item->tanggal_pengumuman)->format('d M Y');
+                    @endphp
                     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 mb-4">
                         <div class="pengumuman-box show-box wow fadeInDown animated" data-wow-offset="10"
                             style="padding: 10px;">
                             <img src="/images/diskominfo.jpg" style="width: 100%;" alt="">
                             <h4>{{ $item->judul_pengumuman }}</h4>
                             <p>{{ $item->isi_pengumuman }}</p>
-                            <small>{{ $item->tanggal_pengumuman }}</small>
+                            <small>{{ $startDate }}</small>
                         </div>
                     </div>
                 @endforeach
@@ -385,7 +396,6 @@
                             <img src="/images/building.svg" style="width: 100%;" alt="">
                             <h4 class="text-center">{{ $room->nama_ruangan }}</h4>
                             <p>Kapasitas: {{ $room->kapasitas }}</p>
-                            <p>Status: {{ $room->status_ruang }}</p>
                         </div>
                     </div>
                 @endforeach
