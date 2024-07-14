@@ -11,7 +11,7 @@
  Target Server Version : 100432 (10.4.32-MariaDB)
  File Encoding         : 65001
 
- Date: 13/07/2024 14:40:25
+ Date: 14/07/2024 14:09:03
 */
 
 SET NAMES utf8mb4;
@@ -64,7 +64,7 @@ CREATE TABLE `cutis`  (
 -- Records of cutis
 -- ----------------------------
 INSERT INTO `cutis` VALUES (5, 20, 3, 'cuti melahirkan', '2003-05-29', '5', 'Saya mau melahirkan', 1, '2024-07-10 13:30:44', '2024-07-10 14:35:59');
-INSERT INTO `cutis` VALUES (6, 19, 3, 'cuti besar', '2000-05-24', '15', 'Umroh', 0, '2024-07-10 13:52:29', '2024-07-10 13:52:29');
+INSERT INTO `cutis` VALUES (6, 19, 3, 'cuti besar', '2000-05-24', '15', 'Umroh', 1, '2024-07-10 13:52:29', '2024-07-14 04:15:59');
 INSERT INTO `cutis` VALUES (7, 21, 2, 'cuti besar', '2000-04-22', '16', 'sakit', 0, '2024-07-10 14:08:03', '2024-07-10 14:08:03');
 
 -- ----------------------------
@@ -89,13 +89,14 @@ CREATE TABLE `events`  (
   CONSTRAINT `events_id_bidang_foreign` FOREIGN KEY (`id_bidang`) REFERENCES `bidangs` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `events_id_kategori_foreign` FOREIGN KEY (`id_kategori`) REFERENCES `kategori_kegiatans` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `events_id_ruangan_foreign` FOREIGN KEY (`id_ruangan`) REFERENCES `ruangans` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of events
 -- ----------------------------
-INSERT INTO `events` VALUES (10, 5, 3, 2, 'Lirpa', 'Semua pegawai ASN', 'Sasirangan', 'harap berhadir', '2024-07-10 21:24:00', '2024-07-12 21:24:00');
-INSERT INTO `events` VALUES (11, 8, 2, 3, 'Pengembangan Aplikasi', 'Semua pegawai ASN', 'Kasual', 'harap berhadir', '2024-07-13 20:30:00', '2024-07-15 14:34:00');
+INSERT INTO `events` VALUES (1, 5, 3, 2, 'Lirpa', 'Semua pegawai ASN', 'Sasirangan', 'harap berhadir', '2024-07-10 21:24:00', '2024-07-12 21:24:00');
+INSERT INTO `events` VALUES (2, 8, 2, 3, 'Pengembangan Aplikasi', 'Semua pegawai ASN', 'Kasual', 'harap berhadir', '2024-07-13 20:30:00', '2024-07-15 14:34:00');
+INSERT INTO `events` VALUES (12, 4, 3, 3, 'Workshop Terapan Aplikasi', 'Semua pegawai ASN', 'PDH Putih', 'Workshop IT', '2024-07-14 08:00:00', '2024-07-15 11:30:00');
 
 -- ----------------------------
 -- Table structure for jabatans
@@ -155,7 +156,7 @@ CREATE TABLE `migrations`  (
   `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of migrations
@@ -177,6 +178,7 @@ INSERT INTO `migrations` VALUES (17, '2024_07_01_122820_add_foreign_key_to_event
 INSERT INTO `migrations` VALUES (18, '2024_07_07_052753_create_jabatans_table', 4);
 INSERT INTO `migrations` VALUES (19, '2024_07_10_134412_add_id_bidang_to_cutis_table', 5);
 INSERT INTO `migrations` VALUES (20, '2024_07_12_140528_change_nip_length_in_pegawais_table', 6);
+INSERT INTO `migrations` VALUES (21, '2024_07_14_041807_remove_status_ruang_from_ruangans_table', 7);
 
 -- ----------------------------
 -- Table structure for pegawais
@@ -200,7 +202,7 @@ CREATE TABLE `pegawais`  (
   INDEX `pegawais_id_jabatan_foreign`(`id_jabatan` ASC) USING BTREE,
   CONSTRAINT `pegawais_id_bidang_foreign` FOREIGN KEY (`id_bidang`) REFERENCES `bidangs` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `pegawais_id_jabatan_foreign` FOREIGN KEY (`id_jabatan`) REFERENCES `jabatans` (`id_jabatan`) ON DELETE SET NULL ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of pegawais
@@ -216,7 +218,6 @@ INSERT INTO `pegawais` VALUES (25, 7, 3, '123456789012345678', 'Tes Panjang NIP'
 INSERT INTO `pegawais` VALUES (26, 1, 3, '1234215123', 'Kepala Dinas', 'laki-laki', 'Banjarbaru', '2003-05-29', 'Kepala Dinas', 'Banjarbaru', '2024-07-12 14:09:21', '2024-07-12 14:09:21');
 INSERT INTO `pegawais` VALUES (27, 4, 4, '190057637345526246', 'Muhammad Yamani', 'laki-laki', 'Banjarmasin', '1995-02-22', 'Kepala Bidang Komunikasi', 'Banjarmasin', '2024-07-13 06:12:16', '2024-07-13 06:12:16');
 INSERT INTO `pegawais` VALUES (28, 5, 5, '1967485358431354', 'Muhammad Sumbul', 'laki-laki', 'Rantau', '1990-06-25', 'Kepala Bidang Statistika Persandian', 'Banjarbaru', '2024-07-13 06:14:40', '2024-07-13 06:14:40');
-INSERT INTO `pegawais` VALUES (29, 8, 4, '193532678821456785', 'Novie Sari', 'perempuan', 'Gambut', '1999-08-25', 'Pegawai Bidang Komunikasi', 'Mandiri Permai', '2024-07-13 06:16:33', '2024-07-13 06:16:33');
 
 -- ----------------------------
 -- Table structure for pengumumen
@@ -271,21 +272,21 @@ CREATE TABLE `ruangans`  (
   `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   `nama_ruangan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `kapasitas` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `status_ruang` enum('tersedia','tidak tersedia') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `hari` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `tanggal` date NULL DEFAULT NULL,
   `durasi_pemakaian` int NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ruangans
 -- ----------------------------
-INSERT INTO `ruangans` VALUES (1, 'Ruangan 1', '11', 'tersedia', NULL, NULL, NULL, '2024-06-13 22:31:45', '2024-06-13 22:31:47');
-INSERT INTO `ruangans` VALUES (2, 'Ruangan 2', '10', 'tersedia', NULL, NULL, NULL, '2024-06-13 22:31:58', '2024-06-13 22:31:59');
-INSERT INTO `ruangans` VALUES (3, 'Aula Kayuh Baimbai', '200', 'tidak tersedia', NULL, NULL, NULL, '2024-06-30 06:46:24', '2024-06-30 06:47:35');
+INSERT INTO `ruangans` VALUES (1, 'Ruangan 1', '11', NULL, NULL, NULL, '2024-06-13 22:31:45', '2024-06-13 22:31:47');
+INSERT INTO `ruangans` VALUES (2, 'Ruangan 2', '10', NULL, NULL, NULL, '2024-06-13 22:31:58', '2024-06-13 22:31:59');
+INSERT INTO `ruangans` VALUES (3, 'Ruangan 3', '200', NULL, NULL, NULL, '2024-06-30 06:46:24', '2024-06-30 06:47:35');
+INSERT INTO `ruangans` VALUES (4, 'Ruangan 4', '151', NULL, NULL, NULL, '2024-07-14 04:21:32', '2024-07-14 04:22:05');
 
 -- ----------------------------
 -- Table structure for sessions
@@ -306,7 +307,7 @@ CREATE TABLE `sessions`  (
 -- ----------------------------
 -- Records of sessions
 -- ----------------------------
-INSERT INTO `sessions` VALUES ('8UoSLHjPwDevCrYf34FPyUvWnzr6ogYp21joS46b', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiNnMzQVB3eHk4bW1EZGV6V0tBYzRkQlVaTXdTbE00Wnh0SkxwVkFSMCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDM6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9iaWRhbmcvMy9hZ2VuZGEiO31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO30=', 1720852697);
+INSERT INTO `sessions` VALUES ('0KYRfL4724VwPT5RNZwIGpurNFOoODkmqndiUGlk', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiVFRralFPc1J0akRxSm9QSWo1bE9aR2JtTEFCMVpaSWdjcVBUODNTdyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7fQ==', 1720937238);
 
 -- ----------------------------
 -- Table structure for users
@@ -327,7 +328,7 @@ CREATE TABLE `users`  (
   INDEX `users_id_jabatan_foreign`(`id_jabatan` ASC) USING BTREE,
   CONSTRAINT `users_id_jabatan_foreign` FOREIGN KEY (`id_jabatan`) REFERENCES `jabatans` (`id_jabatan`) ON DELETE SET NULL ON UPDATE RESTRICT,
   CONSTRAINT `users_id_pegawai_foreign` FOREIGN KEY (`id_pegawai`) REFERENCES `pegawais` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of users
@@ -343,7 +344,6 @@ INSERT INTO `users` VALUES (25, 7, 25, 3, 'Tes Panjang NIP', 'nipo', '$2y$12$uSt
 INSERT INTO `users` VALUES (26, 1, 26, 3, 'Kepala Dinas', 'kepaladinas', '$2y$12$Qmx5Clms30G3B.hjgBdV4uQ1V5JhFAUBV4LyaYlWUJ0CpN842EhGC', 'kepaladinas@test.com', 'kepalapejabat');
 INSERT INTO `users` VALUES (27, 4, 27, 4, 'Muhammad Yamani', 'yamani', '$2y$12$ivfiL5EpFVr98IlOTxupKuUPWZOuthCEsQx1lH/oNpETz2iCj7/Xa', 'pakyam@gmail.com', 'pegawai');
 INSERT INTO `users` VALUES (28, 5, 28, 5, 'Muhammad Sumbul', 'sumbul', '$2y$12$1EJzNTwlSK/hEoGrjyXUC.RB8s1DFepnrprwYY/pOxhX8/DKdRK5m', 'muhamadsumbul@gmail.com', 'pegawai');
-INSERT INTO `users` VALUES (29, 8, 29, 4, 'Novie Sari', 'novie', '$2y$12$2Z/PFvjvmfjoFG1nokjaWelLcri6dvSvrd5.IscKYv.4cVpdCFqJq', 'noviesari@gmail.com', 'bidang');
 
 -- ----------------------------
 -- Table structure for whatsapp
