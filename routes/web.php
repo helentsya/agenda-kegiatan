@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminPegawaiController;
+use App\Http\Controllers\AgendaListController;
 use App\Http\Controllers\CutiController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\JabatanController;
@@ -46,7 +47,9 @@ Route::prefix('admin')
             Route::post('/whatsapp/delete_whatsapp', 'destroy')->name('whatsapp.destroy');
             Route::get('/whatsapp/get-formated-events', 'getFormatedEvents');
         });
-
+        //New
+        Route::get('/agenda', [AgendaListController::class, 'index'])->name('agenda.index');
+        Route::delete('/delete-agenda/{eventId}', [AgendaListController::class, 'delete'])->name('delete-agenda');
         Route::group(['prefix' => 'jabatans'], function () {
             Route::get('/', [JabatanController::class, 'index'])->name('jabatans.index');
             Route::get('/create', [JabatanController::class, 'create'])->name('jabatans.create');

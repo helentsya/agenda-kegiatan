@@ -31,21 +31,17 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         if (Auth::user()->roles == 'admin') {
-            
-            return redirect(RouteServiceProvider::ADMIN);
 
-        } else if (Auth::user()->roles == 'pegawai'){
+            return redirect(RouteServiceProvider::ADMIN);
+        } else if (Auth::user()->roles == 'pegawai') {
 
             return redirect(RouteServiceProvider::PEGAWAI);
-
         } else if (Auth::user()->roles == 'kepalapejabat') {
 
             return redirect(RouteServiceProvider::KEPALA);
-
         } else if (Auth::user()->roles == 'bidang') {
 
             return redirect(RouteServiceProvider::BIDANG);
-
         } else {
             return redirect()->intended(RouteServiceProvider::HOME);
         }
@@ -62,6 +58,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/login');
+        return redirect('/');
     }
 }

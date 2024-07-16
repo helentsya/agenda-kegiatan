@@ -5,7 +5,7 @@
         <script>
             Swal.fire({
                 icon: 'success',
-                title: 'Tambah Pegawai',
+                title: 'Kelola Pegawai',
                 text: '{{ Session::get('success') }}',
             });
         </script>

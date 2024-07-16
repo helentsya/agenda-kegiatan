@@ -162,6 +162,7 @@
             </div>
         </div>
     </header>
+
     <!-- Header Section End -->
 
 
@@ -298,11 +299,6 @@
     <section id="features" class="section" data-stellar-background-ratio="0.2">
         <div class="container">
             <div class="section-header">
-                <div class="logo-menu text-center">
-                    <a class="center" href="/"> <img src="/img/features/gg.gif" height=100px></a>
-                </div>
-                <br>
-                <br>
                 <h2 class="section-title wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">Agenda
                     <span>Kami</span>
                 </h2>
@@ -328,6 +324,57 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($events as $event)
+                                        @php
+                                            $startDate = Carbon::parse($event->start_event)->format('d M Y');
+                                            $startTime = Carbon::parse($event->start_event)->format('H:i');
+                                        @endphp
+                                        <tr>
+                                            <td>{{ $startDate }}</td>
+                                            <td>{{ $startTime }}</td>
+                                            <td>{{ $event->ruangan->nama_ruangan }}</td>
+                                            <td>{{ $event->title }}</td>
+                                            <td>{{ $event->keterangan }}</td>
+                                            <td>{{ $event->start_event }}</td>
+                                            <td>{{ $event->end_event }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="past-events" class="section" data-stellar-background-ratio="0.2">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">Agenda
+                    <span>Berlalu</span>
+                </h2>
+                <hr class="lines wow zoomIn" data-wow-delay="0.3s">
+                <p class="section-subtitle wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s"> </p>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card-table-events rounded-md border bg-white shadow-lg my-4 p-8">
+                        <h2 class="font-bold text-2xl text-center mb-4">Agenda Terlewat</h2>
+                        <div class="overflow-x-auto">
+                            <table class="custom-table">
+                                <thead>
+                                    <tr>
+                                        <th>Tanggal</th>
+                                        <th>Waktu</th>
+                                        <th>Tempat</th>
+                                        <th>Kegiatan</th>
+                                        <th>Keterangan</th>
+                                        <th>Mulai</th>
+                                        <th>Selesai</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($pastEvents as $event)
                                         @php
                                             $startDate = Carbon::parse($event->start_event)->format('d M Y');
                                             $startTime = Carbon::parse($event->start_event)->format('H:i');
@@ -794,6 +841,33 @@
             });
         });
     </script> --}}
+    {{-- autoScroll --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            // Select all sections excluding the one with id "features"
+            const sections = [...document.querySelectorAll('.section')].filter(section => section.id !==
+                'features');
+            let currentSection = 0;
+
+            function scrollToSection(index) {
+                sections[index].scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+
+            function autoScroll() {
+                scrollToSection(currentSection);
+                currentSection = (currentSection + 1) % sections.length;
+            }
+
+            // Scroll every 15 seconds (15000 milliseconds)
+            setInterval(autoScroll, 10000);
+
+            // Scroll to the first section immediately
+            autoScroll();
+        });
+    </script>
+
 </body>
 
 </html>

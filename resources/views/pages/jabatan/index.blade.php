@@ -22,7 +22,7 @@
                 <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                         <tr>
-                            <th scope="col" class="px-6 py-3">ID</th>
+                            <th scope="col" class="px-6 py-3">No</th>
                             <th scope="col" class="px-6 py-3">Nama Jabatan</th>
                             <th scope="col" class="px-6 py-3">Aksi</th>
                         </tr>
@@ -30,7 +30,7 @@
                     <tbody class="table-body-event">
                         @foreach ($jabatans as $jabatan)
                             <tr class="bg-white border-t border-gray-300 hover:bg-gray-100">
-                                <td class="px-6 py-4">{{ $jabatan->id_jabatan }}</td>
+                                <td class="px-6 py-4">{{ $loop->iteration }}</td>
                                 <td class="px-6 py-4">{{ $jabatan->nama_jabatan }}</td>
                                 <td>
                                     <a href="{{ route('jabatans.edit', $jabatan->id_jabatan) }}"
