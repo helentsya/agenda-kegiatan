@@ -36,8 +36,8 @@ class PegawaiController extends Controller
             $query->where('id_bidang', $id_bidang_filter);
         }
 
-        $pegawai = $query->paginate(10); // Gunakan paginate untuk pagination
-        $bidangs = Bidang::all(); // Menambahkan ini untuk mendapatkan data bidang untuk dropdown filter
+        $pegawai = $query->paginate(10);
+        $bidangs = Bidang::all();
 
         if (auth()->user()->id_jabatan == 0) {
             return view('pages.admin.index', compact('pegawai', 'bidangs', 'users'));

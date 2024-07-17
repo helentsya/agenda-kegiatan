@@ -125,6 +125,9 @@ Route::prefix('pegawai')
             Route::get('/events-by-data-range', 'getEventByDateRange')->name('get-event-by-date-range');
             Route::resource('ruangan', RuanganController::class)->only('index');
         });
+        //New
+        Route::get('/agenda', [AgendaListController::class, 'index'])->name('agenda.index');
+        Route::delete('/delete-agenda/{eventId}', [AgendaListController::class, 'delete'])->name('delete-agenda');
 
         Route::resource('kelola-pegawai', PegawaiController::class);
         Route::put('/pegawai/{id}', [\App\Http\Controllers\PegawaiController::class, 'update']);
@@ -157,6 +160,9 @@ Route::prefix('kepala')
             Route::get('/events-by-data-range', 'getEventByDateRange')->name('get-event-by-date-range');
             Route::resource('ruangan', RuanganController::class)->only('index');
         });
+
+        //New
+        Route::get('/agenda', [AgendaListController::class, 'index'])->name('agenda.index');
 
         Route::resource('kelola-pegawai', PegawaiController::class);
         Route::put('/kepala/cuti/{id}/update', [CutiController::class, 'kepala_acc'])->name('cuti.update');

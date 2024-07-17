@@ -120,7 +120,7 @@ class EventController extends Controller
             $event = Event::with('ruangan')->find($eventId);
             $ruangan = Ruangan::all();
             if ($event) {
-                if (auth()->user()->id_jabatan == '1') {
+                if (auth()->user()->id_jabatan == 0) {
                     return view('pages.edit_event_bidang', [
                         'id_bidang' => $event->id_bidang,
                         'id' => $eventId,
@@ -174,7 +174,7 @@ class EventController extends Controller
         } catch (QueryException $th) {
             Session::flash('error', 'Data Gagal Diupdate: ' . $th);
         }
-        if (auth()->user()->id_jabatan == '1') {
+        if (auth()->user()->id_jabatan == '0') {
             return redirect()->route('bidang.agenda', $request->input('id_bidang'));
         } else {
             return redirect()->route('pegawai.bidang.agenda', $request->input('id_bidang'));

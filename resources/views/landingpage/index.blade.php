@@ -108,6 +108,9 @@
                         <a class="nav-link" href="#features">Agenda Kami</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="#past-events">Agenda Berlalu</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="#literasi">Literasi</a>
                     </li>
                     <li class="nav-item">
