@@ -174,7 +174,7 @@ class EventController extends Controller
         } catch (QueryException $th) {
             Session::flash('error', 'Data Gagal Diupdate: ' . $th);
         }
-        if (auth()->user()->id_jabatan == '1') {
+        if (auth()->user()->id_jabatan == 1) {
             return redirect()->route('bidang.agenda', $request->input('id_bidang'));
         } else {
             return redirect()->route('pegawai.bidang.agenda', $request->input('id_bidang'));

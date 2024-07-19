@@ -24,7 +24,7 @@ class PegawaiController extends Controller
         $user = Auth::user();
         $id_bidang_filter = $request->get('id_bidang');
         $users = User::all();
-        if ($user->id_bidang == 1) {
+        if ($user->roles == 'admin') {
             $query = Pegawai::with('bidang')->where('id_bidang', '>', 1);
         } elseif ($user->roles == 'kepalapejabat') {
             $query = Pegawai::with('bidang')->where('id_bidang', '>', 1);
@@ -39,7 +39,7 @@ class PegawaiController extends Controller
         $pegawai = $query->paginate(10);
         $bidangs = Bidang::all();
 
-        if (auth()->user()->id_jabatan == 1) {
+        if (auth()->user()->roles == 'admin') {
             return view('pages.admin.index', compact('pegawai', 'bidangs', 'users'));
         } else {
             return view('pages.pegawai.index', compact('pegawai', 'bidangs', 'users'));

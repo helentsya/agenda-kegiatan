@@ -28,7 +28,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'id' => 2,
-                'id_jabatan' => 1,
+                'id_jabatan' => 2,
                 'id_pegawai' => 2,
                 'id_bidang' => 1,
                 'nama_user' => 'Kepala Dinas',
