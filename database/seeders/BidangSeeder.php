@@ -14,6 +14,9 @@ class BidangSeeder extends Seeder
     {
         $data = [
             [
+                'nama_bidang' => 'Admin',
+            ],
+            [
                 'nama_bidang' => 'Bidang Sekretariat',
             ],
             [

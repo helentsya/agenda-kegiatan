@@ -16,8 +16,8 @@ class PegawaiSeeder extends Seeder
         DB::table('pegawais')->insert([
             [
                 'id' => 1,
-                'id_jabatan' => 0,
-                'id_bidang' => 0,
+                'id_jabatan' => 1,
+                'id_bidang' => 1,
                 'nip' => '0',
                 'nama_pegawai' => 'Admin',
                 'jenis_kelamin' => 'Laki - Laki',
@@ -28,7 +28,7 @@ class PegawaiSeeder extends Seeder
             ],
             [
                 'id' => 2,
-                'id_jabatan' => 1,
+                'id_jabatan' => 2,
                 'id_bidang' => 1,
                 'nip' => '00000',
                 'nama_pegawai' => 'Kepala Dinas',

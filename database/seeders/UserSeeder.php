@@ -17,9 +17,9 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             [
                 'id' => 1,
-                'id_jabatan' => 0,
+                'id_jabatan' => 1,
                 'id_pegawai' => 1,
-                'id_bidang' => 0,
+                'id_bidang' => 1,
                 'nama_user' => 'Admin',
                 'username' => 'admin',
                 'password' => Hash::make('TI_Poliban'),

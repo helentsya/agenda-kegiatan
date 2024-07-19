@@ -15,9 +15,9 @@
             <div class="flex justify-between">
                 <h2 class="font-bold text-xl">Daftar Agenda</h2>
                 {{-- Form Pencarian --}}
-                @if (auth()->user()->id_jabatan == 0)
+                @if (auth()->user()->id_jabatan == 1)
                     <form method="GET" action="{{ route('agenda.index') }}" class="flex items-center">
-                    @elseif (auth()->user()->id_jabatan == 1)
+                    @elseif (auth()->user()->id_jabatan == 2)
                         <form method="GET" action="{{ route('kepala.agenda.index') }}" class="flex items-center">
                         @else
                             <form method="GET" action="{{ route('pegawai.agenda.index') }}" class="flex items-center">

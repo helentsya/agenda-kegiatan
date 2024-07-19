@@ -147,7 +147,7 @@ class AdminPegawaiController extends Controller
             $user->id_jabatan = $request->jabatan;
 
 
-            if ($request->id_jabatan >= 2 && $request->id_jabatan <= 6) {
+            if ($request->id_jabatan >= 3 && $request->id_jabatan <= 6) {
                 $user->roles = "pegawai";
             } else {
                 $user->roles = "bidang";

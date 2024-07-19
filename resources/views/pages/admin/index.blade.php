@@ -20,11 +20,11 @@
                     Pegawai</a>
             </div>
 
-            @if (auth()->user()->id_jabatan == 0 || auth()->user()->id_jabatan == 1)
+            @if (auth()->user()->id_jabatan == 1 || auth()->user()->id_jabatan == 2)
                 <div class="my-4">
-                    @if (auth()->user()->id_jabatan == 0)
+                    @if (auth()->user()->id_jabatan == 1)
                         <form method="GET" action="{{ route('kelola-pegawai.index') }}">
-                        @elseif (auth()->user()->id_jabatan == 1)
+                        @elseif (auth()->user()->id_jabatan == 2)
                             <form method="GET" action="{{ route('kepala.kelola-pegawai.index') }}">
                             @else
                                 <form method="GET" action="{{ route('pegawai.index') }}">

@@ -24,7 +24,7 @@ class PegawaiController extends Controller
         $user = Auth::user();
         $id_bidang_filter = $request->get('id_bidang');
         $users = User::all();
-        if ($user->id_bidang == 0) {
+        if ($user->id_bidang == 1) {
             $query = Pegawai::with('bidang')->where('id_bidang', '>', 1);
         } elseif ($user->roles == 'kepalapejabat') {
             $query = Pegawai::with('bidang')->where('id_bidang', '>', 1);
@@ -39,7 +39,7 @@ class PegawaiController extends Controller
         $pegawai = $query->paginate(10);
         $bidangs = Bidang::all();
 
-        if (auth()->user()->id_jabatan == 0) {
+        if (auth()->user()->id_jabatan == 1) {
             return view('pages.admin.index', compact('pegawai', 'bidangs', 'users'));
         } else {
             return view('pages.pegawai.index', compact('pegawai', 'bidangs', 'users'));
@@ -55,7 +55,7 @@ class PegawaiController extends Controller
         $user = Auth::user();
         $bidang = Bidang::all();
         $jabatans = Jabatan::all();
-        if ($user->id_bidang == 0) {
+        if ($user->id_bidang == 1) {
             return view('pages.admin.create', compact('jabatans', 'bidang'));
         } else {
             return view('pages.pegawai.create', compact('jabatans', 'bidang'));
@@ -95,7 +95,7 @@ class PegawaiController extends Controller
             $user->email = $request->email;
             $user->id_jabatan = $request->jabatan;
 
-            if ($request->jabatan > 2 && $request->jabatan < 6) {
+            if ($request->jabatan >= 3 && $request->jabatan <= 6) {
                 $user->roles = "pegawai";
             } elseif ($request->jabatan == 2) {
                 $user->roles = "kepalapejabat";
@@ -201,7 +201,9 @@ class PegawaiController extends Controller
             $user->id_jabatan = $request->jabatan;
 
 
-            if ($request->id_jabatan >= 2 && $request->id_jabatan <= 6) {
+            if ($request->id_jabatan == 2) {
+                $user->roles = "kepalapejabat";
+            } elseif ($request->id_jabatan >= 3 && $request->id_jabatan <= 6) {
                 $user->roles = "pegawai";
             } else {
                 $user->roles = "bidang";
@@ -214,7 +216,7 @@ class PegawaiController extends Controller
         } catch (\Exception $e) {
             Session::flash('error', 'Data Gagal Diperbarui: ' . $e->getMessage());
         }
-        if (auth()->user()->id_jabatan == 0) {
+        if (auth()->user()->id_jabatan == 1) {
             return redirect()->route('kelola-pegawai.index')->with('update', 'Data pegawai berhasil diupdate.');
         } else {
             return redirect()->route('pegawai.kelola-pegawai.index')->with('update', 'Data pegawai berhasil diupdate.');

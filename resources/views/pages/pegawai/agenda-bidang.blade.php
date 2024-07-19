@@ -33,7 +33,7 @@
                 class: 'text-blue-700 mt-2 mr-2 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-1 text-center ',
                 click: function() {
                     $.ajax({
-                        url: '{{ auth()->user()->id_jabatan == 1 ? route('kepala.event-bidang-detail') : route('pegawai.event-bidang-detail') }}',
+                        url: '{{ auth()->user()->id_jabatan == 2 ? route('kepala.event-bidang-detail') : route('pegawai.event-bidang-detail') }}',
                         type: 'GET',
                         data: {
                             id: eventId
@@ -68,7 +68,7 @@
                 class: 'text-green-700 mt-2 mr-2 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-2 py-1 text-center ',
                 click: function() {
                     window.location.href =
-                        `{{ auth()->user()->id_jabatan == 1 ? route('kepala.edit-event-bidang', '') : route('pegawai.edit-event-bidang', '') }}/${eventId}`;
+                        `{{ auth()->user()->id_jabatan == 2 ? route('kepala.edit-event-bidang', '') : route('pegawai.edit-event-bidang', '') }}/${eventId}`;
                 }
             });
             return button;
@@ -89,7 +89,7 @@
                         if (result.isConfirmed) {
                             $.ajax({
                                 type: 'DELETE',
-                                url: `{{ auth()->user()->id_jabatan == 1 ? route('kepala.delete-event-bidang') : route('pegawai.delete-event-bidang') }}`,
+                                url: `{{ auth()->user()->id_jabatan == 2 ? route('kepala.delete-event-bidang') : route('pegawai.delete-event-bidang') }}`,
                                 data: {
                                     _token: '{{ csrf_token() }}',
                                     id: eventId,
@@ -101,7 +101,7 @@
                                         text: 'Acara telah dihapus.',
                                     }).then(() => {
                                         window.location.href =
-                                            `{{ auth()->user()->id_jabatan == 1 ? route('kepala.bidang.agenda', $bidang->id) : route('pegawai.bidang.agenda', $bidang->id) }}`;
+                                            `{{ auth()->user()->id_jabatan == 2 ? route('kepala.bidang.agenda', $bidang->id) : route('pegawai.bidang.agenda', $bidang->id) }}`;
                                     });
                                 },
                                 error: function(xhr, status, error) {
@@ -134,7 +134,7 @@
                 dateClick: function(date, jsEvent, view) {
                     let clickedDate = date.dateStr;
                     $.ajax({
-                        url: '{{ auth()->user()->id_jabatan == 1 ? route('kepala.event-bidang-by-date') : route('pegawai.event-bidang-by-date') }}',
+                        url: '{{ auth()->user()->id_jabatan == 2 ? route('kepala.event-bidang-by-date') : route('pegawai.event-bidang-by-date') }}',
                         type: 'GET',
                         data: {
                             date: clickedDate,
@@ -184,6 +184,6 @@
     </script>
     <script>
         const baseUrl =
-            "{{ auth()->user()->id_jabatan == 1 ? route('kepala.edit-event-bidang', '') : route('pegawai.edit-event-bidang', '') }}";
+            "{{ auth()->user()->id_jabatan == 2 ? route('kepala.edit-event-bidang', '') : route('pegawai.edit-event-bidang', '') }}";
     </script>
 @endsection

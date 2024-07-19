@@ -4,9 +4,9 @@
     @php
         // Determine the prefix based on the user's role
 $prefix = '';
-if (auth()->user()->id_jabatan == '0') {
+if (auth()->user()->id_jabatan == '1') {
     $prefix = 'admin';
-} elseif (auth()->user()->id_jabatan == '1') {
+} elseif (auth()->user()->id_jabatan == '2') {
     $prefix = 'kepala';
 } else {
     $prefix = 'pegawai';
