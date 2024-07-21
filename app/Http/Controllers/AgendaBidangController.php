@@ -77,6 +77,7 @@ class AgendaBidangController extends Controller
     public function cuti_store(Request $request)
     {
         $id_user = auth()->user()->pegawai->id;
+        $id_bidang = auth()->user()->pegawai->id_bidang;
 
         $request->validate([
 
@@ -91,6 +92,7 @@ class AgendaBidangController extends Controller
             Cuti::create([
                 'jenis_cuti' => $request->jenis_cuti,
                 'id_pegawai' => $id_user,
+                'id_bidang' => $id_bidang,
                 'mulai_cuti' => $request->mulai_cuti,
                 'lama_cuti' => $request->lama_cuti,
                 // 'akhir_cuti' => $request->akhir_cuti,

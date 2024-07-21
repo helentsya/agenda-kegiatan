@@ -134,9 +134,7 @@ Route::prefix('pegawai')
         Route::resource('cuti', CutiController::class)->only(['index', 'create', 'store']);
     });
 
-// Route::middleware('role:pegawai')->group(function () {
-//     Route::resource('pegawai.kelola-pegawai', PegawaiController::class);
-// });
+
 Route::prefix('kepala')
     ->middleware('auth', 'kepalapejabat')
     ->as('kepala.')

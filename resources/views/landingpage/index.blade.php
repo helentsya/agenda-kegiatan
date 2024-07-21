@@ -34,59 +34,51 @@
     <link rel="shortcut icon" href="http://diskominfo.banjarbarukota.go.id/oriz/favicon.ico">
 </head>
 <style>
+    .custom-table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        /* Smooth scrolling on iOS */
+    }
+
     .custom-table {
         width: 100%;
-        margin-top: 20px;
         border-collapse: collapse;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        background-color: #fff;
-        border-radius: 8px;
     }
 
     .custom-table th,
     .custom-table td {
-        padding: 15px;
+        padding: 8px 12px;
         border: 1px solid #ddd;
-        text-align: left;
     }
 
-    .custom-table th {
-        background-color: #4CAF50;
-        color: white;
-        font-weight: bold;
-        text-transform: uppercase;
-    }
+    @media screen and (max-width: 600px) {
+        .custom-table thead {
+            display: none;
+        }
 
-    .custom-table tr:nth-child(even) {
-        background-color: #f2f2f2;
-    }
+        .custom-table tr {
+            display: block;
+            margin-bottom: 10px;
+        }
 
-    .custom-table tr:hover {
-        background-color: #e0e0e0;
-    }
+        .custom-table td {
+            display: block;
+            text-align: right;
+            font-size: 13px;
+            border-bottom: 1px solid #ddd;
+            position: relative;
+            padding-left: 50%;
+        }
 
-    .section-header h2 {
-        font-size: 2.5rem;
-        font-weight: bold;
-        color: #333;
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-    .card-table-events {
-        padding: 20px;
-        background-color: #fff;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        margin-top: 20px;
-    }
-
-    .card-table-events h2 {
-        font-size: 1.8rem;
-        font-weight: bold;
-        color: #333;
-        text-align: center;
-        margin-bottom: 20px;
+        .custom-table td::before {
+            content: attr(data-label);
+            position: absolute;
+            left: 0;
+            width: 50%;
+            padding-left: 10px;
+            font-weight: bold;
+            text-align: left;
+        }
     }
 </style>
 
@@ -294,6 +286,7 @@
 
 
     </section>
+    <br>
 
 
     <!-- blog Section End -->
@@ -303,7 +296,7 @@
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">Agenda
-                    <span>Kami</span>
+                    <span>Hari Ini</span>
                 </h2>
                 <hr class="lines wow zoomIn" data-wow-delay="0.3s">
                 <p class="section-subtitle wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s"> </p>
@@ -311,8 +304,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card-table-events rounded-md border bg-white shadow-lg my-4 p-8">
-                        <h2 class="font-bold text-2xl text-center mb-4">Agenda Hari Ini</h2>
-                        <div class="overflow-x-auto">
+                        <div class="custom-table-wrapper">
                             <table class="custom-table">
                                 <thead>
                                     <tr>
@@ -326,21 +318,25 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($events as $event)
+                                    @forelse ($events as $event)
                                         @php
                                             $startDate = Carbon::parse($event->start_event)->format('d M Y');
                                             $startTime = Carbon::parse($event->start_event)->format('H:i');
                                         @endphp
                                         <tr>
-                                            <td>{{ $startDate }}</td>
-                                            <td>{{ $startTime }}</td>
-                                            <td>{{ $event->ruangan->nama_ruangan }}</td>
-                                            <td>{{ $event->title }}</td>
-                                            <td>{{ $event->keterangan }}</td>
-                                            <td>{{ $event->start_event }}</td>
-                                            <td>{{ $event->end_event }}</td>
+                                            <td data-label="Tanggal">{{ $startDate }}</td>
+                                            <td data-label="Waktu">{{ $startTime }}</td>
+                                            <td data-label="Tempat">{{ $event->ruangan->nama_ruangan }}</td>
+                                            <td data-label="Kegiatan">{{ $event->title }}</td>
+                                            <td data-label="Keterangan">{{ $event->keterangan }}</td>
+                                            <td data-label="Mulai">{{ $event->start_event }}</td>
+                                            <td data-label="Selesai">{{ $event->end_event }}</td>
                                         </tr>
-                                    @endforeach
+                                    @empty
+                                        <tr>
+                                            <td colspan="7" class="text-center">Tidak ada agenda hari ini</td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
@@ -349,7 +345,6 @@
             </div>
         </div>
     </section>
-
     <section id="past-events" class="section" data-stellar-background-ratio="0.2">
         <div class="container">
             <div class="section-header">
@@ -362,8 +357,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card-table-events rounded-md border bg-white shadow-lg my-4 p-8">
-                        <h2 class="font-bold text-2xl text-center mb-4">Agenda Terlewat</h2>
-                        <div class="overflow-x-auto">
+                        <div class="custom-table-wrapper">
                             <table class="custom-table">
                                 <thead>
                                     <tr>
@@ -377,21 +371,26 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($pastEvents as $event)
+                                    @forelse ($pastEvents as $event)
                                         @php
                                             $startDate = Carbon::parse($event->start_event)->format('d M Y');
                                             $startTime = Carbon::parse($event->start_event)->format('H:i');
                                         @endphp
                                         <tr>
-                                            <td>{{ $startDate }}</td>
-                                            <td>{{ $startTime }}</td>
-                                            <td>{{ $event->ruangan->nama_ruangan }}</td>
-                                            <td>{{ $event->title }}</td>
-                                            <td>{{ $event->keterangan }}</td>
-                                            <td>{{ $event->start_event }}</td>
-                                            <td>{{ $event->end_event }}</td>
+                                            <td data-label="Tanggal">{{ $startDate }}</td>
+                                            <td data-label="Waktu">{{ $startTime }}</td>
+                                            <td data-label="Tempat">{{ $event->ruangan->nama_ruangan }}</td>
+                                            <td data-label="Kegiatan">{{ $event->title }}</td>
+                                            <td data-label="Keterangan">{{ $event->keterangan }}</td>
+                                            <td data-label="Mulai">{{ $event->start_event }}</td>
+                                            <td data-label="Selesai">{{ $event->end_event }}</td>
                                         </tr>
-                                    @endforeach
+                                    @empty
+                                        <tr>
+                                            <td colspan="7" class="text-center">Tidak ada agenda yang telah berlalu
+                                            </td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
@@ -400,6 +399,8 @@
             </div>
         </div>
     </section>
+
+
 
 
 
@@ -849,7 +850,7 @@
         document.addEventListener('DOMContentLoaded', (event) => {
             // Select all sections excluding the one with id "features"
             const sections = [...document.querySelectorAll('.section')].filter(section => section.id !==
-                'features');
+                'features', 'blog', 'bjbtv');
             let currentSection = 0;
 
             function scrollToSection(index) {

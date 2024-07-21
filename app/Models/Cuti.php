@@ -10,6 +10,7 @@ class Cuti extends Model
     use HasFactory;
     protected $fillable = [
         'id_pegawai',
+        'id_bidang',
         'jenis_cuti',
         'mulai_cuti',
         'lama_cuti',

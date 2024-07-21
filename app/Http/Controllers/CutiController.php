@@ -51,6 +51,7 @@ class CutiController extends Controller
      */
     public function create()
     {
+
         return view('pages.cuti.create');
     }
 
@@ -59,7 +60,9 @@ class CutiController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $id_user = auth()->user()->pegawai->id;
+        $id_bidang = auth()->user()->pegawai->id_bidang;
 
         $request->validate([
             // 'id_pegawai' => 'required|numeric',
@@ -73,6 +76,7 @@ class CutiController extends Controller
             Cuti::create([
                 'jenis_cuti' => $request->jenis_cuti,
                 'id_pegawai' => $id_user,
+                'id_bidang' => $id_bidang,
                 'mulai_cuti' => $request->mulai_cuti,
                 'lama_cuti' => $request->lama_cuti,
                 // 'akhir_cuti' => $request->akhir_cuti,

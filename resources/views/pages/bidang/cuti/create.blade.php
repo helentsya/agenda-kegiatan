@@ -30,6 +30,7 @@
             <h1 class="mb-4  text-4xl text-center font-extrabold leading-none tracking-tight text-blue-500 ">
                 Pengajuan Cuti Pegawai</h1>
             <div class="relative mb-4 w-full">
+                <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama</label>
                 <input required type="text" id="floating_title"
                     class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-gray-200 rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     placeholder="{{ auth()->user()->pegawai->nama_pegawai }}" name="name" disabled />
@@ -39,7 +40,7 @@
                 <select id="countries" name="jenis_cuti"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     <option selected disabled>Pilih Jenis Cuti</option>
-                // 'Cuti Tahunan', 'Cuti Besar', 'Cuti Sakit', 'Cuti Melahirkan', 'Cuti Karena Alasan Penting
+                    // 'Cuti Tahunan', 'Cuti Besar', 'Cuti Sakit', 'Cuti Melahirkan', 'Cuti Karena Alasan Penting
                     <option value="cuti tahunan">Cuti Tahunan</option>
                     <option value="cuti besar">Cuti Besar</option>
                     <option value="cuti sakit">Cuti Sakit</option>
@@ -84,12 +85,12 @@
                     Cuti
                 </label>
             </div>
-            @if (auth()->user()->roles == "admin")
+            @if (auth()->user()->roles == 'admin')
                 <a href="{{ route('pegawai.home') }}"
-                class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200">Kembali</a>
+                    class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200">Kembali</a>
             @else
                 <a href="{{ route('pegawai.pegawai.home') }}"
-                class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200">Kembali</a>
+                    class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200">Kembali</a>
             @endif
             <button type="submit"
                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none">Ajukan</button>
