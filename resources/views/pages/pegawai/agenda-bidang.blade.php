@@ -26,6 +26,7 @@
         <div class="send-to-wa-button-container mt-2"></div>
     </main>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+
     <script>
         function createDetailButton(eventId) {
             let button = $('<button>', {
@@ -63,61 +64,65 @@
         }
 
         function createEditButton(eventId) {
-            let button = $('<button>', {
-                text: 'Edit',
-                class: 'text-green-700 mt-2 mr-2 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-2 py-1 text-center ',
-                click: function() {
-                    window.location.href =
-                        `{{ auth()->user()->id_jabatan == 2 ? route('kepala.edit-event-bidang', '') : route('pegawai.edit-event-bidang', '') }}/${eventId}`;
-                }
-            });
-            return button;
+            @if (auth()->user()->role == 'admin' || auth()->user()->role == 'pegawai')
+                let button = $('<button>', {
+                    text: 'Edit',
+                    class: 'text-green-700 mt-2 mr-2 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-2 py-1 text-center ',
+                    click: function() {
+                        window.location.href =
+                            `{{ auth()->user()->id_jabatan == 2 ? route('kepala.edit-event-bidang', '') : route('pegawai.edit-event-bidang', '') }}/${eventId}`;
+                    }
+                });
+                return button;
+            @endif
         }
 
         function createDeleteButton(eventId) {
-            let button = $('<button>', {
-                text: 'Hapus',
-                class: 'text-red-700 mt-2 mr-2 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-2 py-1 text-center ',
-                click: function() {
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'Hapus Data',
-                        text: 'Apakah Anda Yakin Ingin Menghapus Acara Ini?',
-                        showConfirmButton: true,
-                        showCancelButton: true,
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            $.ajax({
-                                type: 'DELETE',
-                                url: `{{ auth()->user()->id_jabatan == 2 ? route('kepala.delete-event-bidang') : route('pegawai.delete-event-bidang') }}`,
-                                data: {
-                                    _token: '{{ csrf_token() }}',
-                                    id: eventId,
-                                },
-                                success: function(response) {
-                                    Swal.fire({
-                                        icon: 'success',
-                                        title: 'Data Dihapus',
-                                        text: 'Acara telah dihapus.',
-                                    }).then(() => {
-                                        window.location.href =
-                                            `{{ auth()->user()->id_jabatan == 2 ? route('kepala.bidang.agenda', $bidang->id) : route('pegawai.bidang.agenda', $bidang->id) }}`;
-                                    });
-                                },
-                                error: function(xhr, status, error) {
-                                    Swal.fire({
-                                        icon: 'error',
-                                        title: 'Gagal Menghapus',
-                                        text: 'Terjadi kesalahan saat menghapus acara: ' +
-                                            error,
-                                    });
-                                }
-                            });
-                        }
-                    });
-                }
-            });
-            return button;
+            @if (auth()->user()->role == 'admin' || auth()->user()->role == 'pegawai')
+                let button = $('<button>', {
+                    text: 'Hapus',
+                    class: 'text-red-700 mt-2 mr-2 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-2 py-1 text-center ',
+                    click: function() {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Hapus Data',
+                            text: 'Apakah Anda Yakin Ingin Menghapus Acara Ini?',
+                            showConfirmButton: true,
+                            showCancelButton: true,
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    type: 'DELETE',
+                                    url: `{{ auth()->user()->id_jabatan == 2 ? route('kepala.delete-event-bidang') : route('pegawai.delete-event-bidang') }}`,
+                                    data: {
+                                        _token: '{{ csrf_token() }}',
+                                        id: eventId,
+                                    },
+                                    success: function(response) {
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Data Dihapus',
+                                            text: 'Acara telah dihapus.',
+                                        }).then(() => {
+                                            window.location.href =
+                                                `{{ auth()->user()->id_jabatan == 2 ? route('kepala.bidang.agenda', $bidang->id) : route('pegawai.bidang.agenda', $bidang->id) }}`;
+                                        });
+                                    },
+                                    error: function(xhr, status, error) {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Gagal Menghapus',
+                                            text: 'Terjadi kesalahan saat menghapus acara: ' +
+                                                error,
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+                return button;
+            @endif
         }
 
         $(document).ready(function() {
@@ -151,7 +156,7 @@
                                 $.each(events, function(index, event) {
                                     let row = $('<tr>').addClass(
                                         'bg-white border-t border-gray-300 hover:bg-gray-100'
-                                    );
+                                        );
                                     $('<td>').addClass('px-6 py-4').text(event
                                         .title).appendTo(row);
                                     $('<td>').addClass('px-6 py-4').text(event
@@ -181,9 +186,5 @@
             });
             calendar.render();
         });
-    </script>
-    <script>
-        const baseUrl =
-            "{{ auth()->user()->id_jabatan == 2 ? route('kepala.edit-event-bidang', '') : route('pegawai.edit-event-bidang', '') }}";
     </script>
 @endsection

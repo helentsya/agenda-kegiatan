@@ -25,7 +25,7 @@ class PegawaiController extends Controller
         $id_bidang_filter = $request->get('id_bidang');
         $users = User::all();
         if ($user->roles == 'admin') {
-            $query = Pegawai::with('bidang')->where('id_bidang', '>', 1);
+            $query = Pegawai::with('bidang')->where('id_bidang', '>=', 1);
         } elseif ($user->roles == 'kepalapejabat') {
             $query = Pegawai::with('bidang')->where('id_bidang', '>', 1);
         } else {

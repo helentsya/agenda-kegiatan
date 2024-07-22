@@ -37,6 +37,4 @@ Route::prefix('bidang')
             Route::post('/cuti/store', 'cuti_store')->name('cuti.store');
             Route::get('/cuti/{id}/delete', 'cuti_delete')->name('cuti.delete');
         });
-
     });
-
