@@ -31,14 +31,14 @@
         </div>
         <div class="card-table-events rounded-md border bg-white shadow-lg my-4 p-8">
             <!-- Dropdown for Field Filter -->
-            <div id="field-filter-container" class="flex justify-end mb-4">
+            {{-- <div id="field-filter-container" class="flex justify-end mb-4">
                 <label for="fieldFilter" class="mr-2">Filter by Field:</label>
                 <select id="fieldFilter"
                     class="block px-2.5 pb-2.5 pt-4 text-sm text-gray-900 bg-white rounded-lg border-1 border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-600">
                     <option value="">All Fields</option>
                     <!-- Options will be populated dynamically -->
                 </select>
-            </div>
+            </div> --}}
             <div class="relative overflow-x-auto border border-gray-300 shadow-md sm:rounded-lg mt-4">
                 <table class="w-full text-sm text-left rtl:text-right text-gray-500">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50">
