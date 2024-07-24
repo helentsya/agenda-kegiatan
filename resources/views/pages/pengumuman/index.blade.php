@@ -29,9 +29,9 @@
                             <th scope="col" class="px-6 py-3">
                                 Isi Pengumuman
                             </th>
-                            {{-- <th scope="col" class="px-6 py-3">
+                            <th scope="col" class="px-6 py-3">
                                 Tanggal Pengumuman
-                            </th> --}}
+                            </th>
                             <th scope="col" class="px-6 py-3">
                                 Aksi
                             </th>
@@ -41,6 +41,7 @@
                         @forelse ($info as $item)
                             <tr class="bg-white border-t border-gray-300 hover:bg-gray-100">
                                 <td class="px-6 py-4">{{ $item->judul_pengumuman }}</td>
+                                <td class="px-6 py-4">{{ $item->isi_pengumuman }}</td>
                                 <td class="px-6 py-4"><span class="badge bg-primary">{{ $item->tanggal_pengumuman }}</td>
                                 <td class="px-6 py-4 flex">
                                     <a href="{{ route('pengumuman.edit', $item) }}"
