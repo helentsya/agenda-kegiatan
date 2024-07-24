@@ -140,7 +140,7 @@ class PegawaiController extends Controller
         $pegawai = Pegawai::findOrFail($id);
         $bidang = Bidang::all();
         $jabatans = Jabatan::all();
-        if ($user->id_bidang == 0) {
+        if ($user->id_bidang == 1) {
             return view('pages.admin.edit', compact('users', 'jabatans', 'bidang', 'pegawai'));
         } else {
             return view('pages.pegawai.edit', compact('users', 'jabatans', 'bidang', 'pegawai'));
