@@ -22,12 +22,32 @@
     <main id="main-content" class="bg-gray-100 ml-56 p-4 sm:p-8 md:p-12  lg:p-16 pt-8 min-h-screen">
 
         <div class="card-table-events rounded-md border  bg-white shadow-lg my-4 p-8">
-            <div class="flex justify-between">
+            {{-- <div class="flex justify-between">
                 <h2 class="font-bold text-xl">Kelola Cuti Pegawai</h2>
                 @if (auth()->user()->roles != 'kepalapejabat' && auth()->user()->roles != 'admin')
                     <a href="{{ route('pegawai.cuti.create') }}"
                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Tambah
                         Cuti</a>
+                @endif
+            </div> --}}
+            <div class="flex justify-between">
+                <h2 class="font-bold text-xl">Kelola Cuti Pegawai</h2>
+                @php
+                    $waktuMasuk = Carbon\Carbon::parse(auth()->user()->pegawai->waktu_masuk);
+                    $canApply = $waktuMasuk->diffInYears(Carbon\Carbon::now()) >= 1;
+                @endphp
+                @if (auth()->user()->roles != 'kepalapejabat' && auth()->user()->roles != 'admin')
+                    @if ($canApply)
+                        <a href="{{ route('pegawai.cuti.create') }}"
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                            Tambah Cuti
+                        </a>
+                    @else
+                        <button disabled
+                            class="text-white bg-gray-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                            Ajukan Cuti (Belum Memenuhi Syarat)
+                        </button>
+                    @endif
                 @endif
             </div>
             <div class="relative overflow-x-auto border border-gray-300 shadow-md sm:rounded-lg mt-4 ">

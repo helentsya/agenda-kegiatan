@@ -71,6 +71,7 @@ class PegawaiController extends Controller
             $pegawai = new Pegawai;
             $pegawai->id_bidang = $request->bidang;
             $pegawai->id_jabatan = $request->jabatan;
+            $pegawai->waktu_masuk = $request->waktu_masuk;
             $pegawai->nip = $request->nip;
             $pegawai->nama_pegawai = $request->nama_pegawai;
             $pegawai->jenis_kelamin = $request->jenis_kelamin;
@@ -160,6 +161,7 @@ class PegawaiController extends Controller
                 'jenis_kelamin' => 'required|in:laki-laki,perempuan',
                 'tempat_lahir' => 'required|string|max:255',
                 'tanggal_lahir' => 'required|date',
+                'waktu_masuk' => 'required|date',
                 'jabatan' => 'required|string|max:255',
                 'alamat' => 'required|string|max:255',
 
@@ -173,6 +175,7 @@ class PegawaiController extends Controller
             // Update data Pegawai
             $pegawai->id_bidang = $request->bidang;
             $pegawai->id_jabatan = $request->jabatan;
+            $pegawai->waktu_masuk = $request->waktu_masuk;
             $pegawai->nip = $request->nip;
             $pegawai->nama_pegawai = $request->nama_pegawai;
             $pegawai->jenis_kelamin = $request->jenis_kelamin;

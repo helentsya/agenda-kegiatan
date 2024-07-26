@@ -13,6 +13,7 @@ class Pegawai extends Model
         'id_bidang',
         'nip',
         'nama_pegawai',
+        'waktu_masuk',
         'jenis_kelamin',
         'tempat_lahir',
         'tanggal_lahir',

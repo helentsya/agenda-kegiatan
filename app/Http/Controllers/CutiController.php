@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Bidang;
 use App\Models\Cuti;
 use App\Models\Pegawai;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -51,8 +52,12 @@ class CutiController extends Controller
      */
     public function create()
     {
+        $pegawais = Pegawai::all()->filter(function ($pegawai) {
+            $waktuMasuk = Carbon::parse($pegawai->waktu_masuk);
+            return $waktuMasuk->diffInYears(Carbon::now()) >= 1;
+        });
 
-        return view('pages.cuti.create');
+        return view('pages.cuti.create', compact('pegawais'));
     }
 
     /**
@@ -60,36 +65,32 @@ class CutiController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $id_user = auth()->user()->pegawai->id;
         $id_bidang = auth()->user()->pegawai->id_bidang;
 
         $request->validate([
-            // 'id_pegawai' => 'required|numeric',
+            'id_pegawai' => 'required|exists:pegawais,id',
             'mulai_cuti' => 'required|date',
             'lama_cuti' => 'required|numeric|min:1',
-            // 'akhir_cuti' => 'required|date',
             'alasan' => 'required|string|max:255'
         ]);
 
-        try {
-            Cuti::create([
-                'jenis_cuti' => $request->jenis_cuti,
-                'id_pegawai' => $id_user,
-                'id_bidang' => $id_bidang,
-                'mulai_cuti' => $request->mulai_cuti,
-                'lama_cuti' => $request->lama_cuti,
-                // 'akhir_cuti' => $request->akhir_cuti,
-                'keterangan' => $request->alasan,
-                'is_approved' => false
-            ]);
+        $pegawai = Pegawai::find($request->pegawai->id);
+        $waktuMasuk = Carbon::parse($pegawai->waktu_masuk);
 
-            Session::flash('success', 'Cuti Berhasil Diajukan, Menunggu Persetujuan Admin');
-        } catch (\Exception $e) {
-            Session::flash('error', $e->getMessage());
+        if ($waktuMasuk->diffInYears(Carbon::now()) < 1) {
+            return back()->withErrors(['pegawai_id' => 'Pegawai belum bekerja lebih dari 1 tahun.']);
         }
 
-        return redirect()->back();
+        Cuti::create([
+            'id_pegawai' => $request->pegawai->id,
+            'mulai_cuti' => $request->mulai_cuti,
+            'lama_cuti' => $request->lama_cuti,
+            'alasan' => $request->alasan,
+            'is_approved' => false
+        ]);
+
+        return redirect()->route('cuti.index')->with('success', 'Cuti berhasil diajukan.');
     }
 
     /**
@@ -123,6 +124,7 @@ class CutiController extends Controller
             Session::flash('success', 'Cuti Berhasil Disetujui');
             return redirect()->back();
         }
+
         Session::flash('error', 'Cuti Gagal Disetujui');
         return redirect()->back();
     }
@@ -139,6 +141,7 @@ class CutiController extends Controller
             Session::flash('success', 'Cuti Berhasil Disetujui');
             return redirect()->route('kepala.cuti.index');
         }
+
         Session::flash('error', 'Cuti Gagal Disetujui');
         return redirect()->route('kepala.cuti.index');
     }
