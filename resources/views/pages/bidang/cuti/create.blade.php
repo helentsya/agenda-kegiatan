@@ -40,12 +40,11 @@
                 <select id="countries" name="jenis_cuti"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     <option selected disabled>Pilih Jenis Cuti</option>
-                    // 'Cuti Tahunan', 'Cuti Besar', 'Cuti Sakit', 'Cuti Melahirkan', 'Cuti Karena Alasan Penting
-                    <option value="cuti tahunan">Cuti Tahunan</option>
-                    <option value="cuti besar">Cuti Besar</option>
-                    <option value="cuti sakit">Cuti Sakit</option>
-                    <option value="cuti melahirkan">Cuti Melahirkan</option>
-                    <option value="cuti alasan penting">Cuti Alasan Penting</option>
+                    <option value="cuti tahunan">Cuti Tahunan (max 12 hari)</option>
+                    <option value="cuti besar">Cuti Besar (max 30 hari)</option>
+                    <option value="cuti sakit">Cuti Sakit (max 10 hari)</option>
+                    <option value="cuti melahirkan">Cuti Melahirkan (max 90 hari)</option>
+                </select>
                 </select>
             </div>
 
@@ -59,23 +58,16 @@
                 </label>
             </div>
 
-            {{-- <div class="relative mb-4 w-full">
+            <div class="relative mb-4 w-full">
                 <input required type="date" id="floating_akhir_cuti"
                     class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     placeholder=" " name="akhir_cuti" />
                 <label for="floating_akhir_cuti"
-                    class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Akhir Cuti
-                </label>
-            </div> --}}
-            <div class="relative mb-4 w-full">
-                <input required type="number" id="floating_lama_cuti"
-                    class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                    placeholder=" " name="lama_cuti" />
-                <label for="floating_lama_cuti"
-                    class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Durasi
+                    class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Akhir
                     Cuti
                 </label>
             </div>
+
             <div class="relative mb-4 w-full">
                 <input required type="text" id="floating_alasan"
                     class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -89,7 +81,7 @@
                 <a href="{{ route('pegawai.home') }}"
                     class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200">Kembali</a>
             @else
-                <a href="{{ route('pegawai.pegawai.home') }}"
+                <a href="{{ route('bidang.cuti.index') }}"
                     class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200">Kembali</a>
             @endif
             <button type="submit"

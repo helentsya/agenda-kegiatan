@@ -68,25 +68,31 @@ class CutiController extends Controller
         $id_user = auth()->user()->pegawai->id;
         $id_bidang = auth()->user()->pegawai->id_bidang;
 
-        $request->validate([
-            'id_pegawai' => 'required|exists:pegawais,id',
-            'mulai_cuti' => 'required|date',
-            'lama_cuti' => 'required|numeric|min:1',
-            'alasan' => 'required|string|max:255'
-        ]);
+        $rules = Cuti::rules($request);
+        $request->validate($rules);
+
+
+        // $request->validate([
+        //     'id_pegawai' => 'required|exists:pegawais,id',
+        //     'mulai_cuti' => 'required|date',
+        //     'akhir_cuti' => 'required|date',
+        //     'alasan' => 'required|string|max:255'
+        // ]);
 
         $pegawai = Pegawai::find($request->pegawai->id);
         $waktuMasuk = Carbon::parse($pegawai->waktu_masuk);
 
         if ($waktuMasuk->diffInYears(Carbon::now()) < 1) {
-            return back()->withErrors(['pegawai_id' => 'Pegawai belum bekerja lebih dari 1 tahun.']);
+            return back()->with('error', 'Pegawai belum bekerja lebih dari 1 tahun.');
         }
 
         Cuti::create([
-            'id_pegawai' => $request->pegawai->id,
+            'id_pegawai' => $id_user,
+            'id_bidang' => $id_bidang,
             'mulai_cuti' => $request->mulai_cuti,
-            'lama_cuti' => $request->lama_cuti,
-            'alasan' => $request->alasan,
+            'akhir_cuti' => $request->akhir_cuti,
+            'jenis_cuti' => $request->jenis_cuti,
+            'keterangan' => $request->alasan,
             'is_approved' => false
         ]);
 

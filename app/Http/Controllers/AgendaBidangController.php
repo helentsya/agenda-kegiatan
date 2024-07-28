@@ -7,6 +7,7 @@ use App\Models\KategoriKegiatan;
 use App\Models\Ruangan;
 use App\Models\Cuti;
 use App\Models\Bidang;
+use App\Models\Pegawai;
 use Carbon\Carbon;
 use Carbon\Exceptions\InvalidFormatException;
 use Illuminate\Database\QueryException;
@@ -79,34 +80,56 @@ class AgendaBidangController extends Controller
         $id_user = auth()->user()->pegawai->id;
         $id_bidang = auth()->user()->pegawai->id_bidang;
 
-        $request->validate([
+        $rules = Cuti::rules($request);
+        $request->validate($rules);
 
-            'mulai_cuti' => 'required|date',
-            'lama_cuti' => 'required|numeric|min:1',
-            'alasan' => 'required|string|max:255'
 
+        $pegawai = Pegawai::find($id_user);
+        $waktuMasuk = Carbon::parse($pegawai->waktu_masuk);
+
+        if ($waktuMasuk->diffInYears(Carbon::now()) < 1) {
+            return back()->with('error', 'Pegawai belum bekerja lebih dari 1 tahun.');
+        }
+        // $mulaiCuti = Carbon::parse($request->mulai_cuti);
+        // $akhirCuti = Carbon::parse($request->akhir_cuti);
+        // $lamaCuti = $mulaiCuti->diffInDays($akhirCuti) + 1;
+
+        // // Validasi durasi cuti berdasarkan jenis cuti
+        // switch ($request->jenis_cuti) {
+        //     case 'cuti tahunan':
+        //         if ($lamaCuti > 12) {
+        //             return back()->with('error', 'Durasi cuti tahunan tidak boleh lebih dari 90 hari.');
+        //         }
+        //         break;
+        //     case 'cuti besar':
+        //         if ($lamaCuti > 30) {
+        //             return back()->with('error', 'Durasi cuti besar tidak boleh lebih dari 30 hari.');
+        //         }
+        //         break;
+        //     case 'cuti sakit':
+        //         if ($lamaCuti > 10) {
+        //             return back()->with('error', 'Durasi cuti sakit tidak boleh lebih dari 14 hari.');
+        //         }
+        //         break;
+        //     case 'cuti melahirkan':
+        //         if ($lamaCuti > 90) {
+        //             return back()->with('error', 'Durasi cuti melahirkan tidak boleh lebih dari 90 hari.');
+        //         }
+        //         break;
+        //     default:
+        //         return back()->with('error', 'Jenis cuti tidak valid.');
+        // }
+        Cuti::create([
+            'id_pegawai' => $id_user,
+            'id_bidang' => $id_bidang,
+            'mulai_cuti' => $request->mulai_cuti,
+            'akhir_cuti' => $request->akhir_cuti,
+            'jenis_cuti' => $request->jenis_cuti,
+            'keterangan' => $request->alasan,
+            'is_approved' => false
         ]);
 
-        try {
-
-            Cuti::create([
-                'jenis_cuti' => $request->jenis_cuti,
-                'id_pegawai' => $id_user,
-                'id_bidang' => $id_bidang,
-                'mulai_cuti' => $request->mulai_cuti,
-                'lama_cuti' => $request->lama_cuti,
-                // 'akhir_cuti' => $request->akhir_cuti,
-                'keterangan' => $request->alasan,
-                'is_approved' => false
-            ]);
-
-            Session::flash('success', 'Cuti Berhasil Diajukan, Menunggu Persetujuan Admin');
-        } catch (\Exception $e) {
-
-            Session::flash('error', $e->getMessage());
-        }
-
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Cuti berhasil diajukan.');
     }
 
     public function cuti_delete(Request $request, $id)

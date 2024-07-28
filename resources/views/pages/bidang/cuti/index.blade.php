@@ -5,7 +5,7 @@
         <script>
             Swal.fire({
                 icon: 'success',
-                title: 'Cuti Pegawai',
+                title: 'Cuti Anda Berhasil Diajukan',
                 text: '{{ Session::get('success') }}',
             });
         </script>
@@ -44,7 +44,7 @@
                         <tr>
                             <th scope="col" class="px-6 py-3">Nama Pegawai</th>
                             <th scope="col" class="px-6 py-3">Tanggal Cuti</th>
-                            <th scope="col" class="px-6 py-3">Durasi Cuti</th>
+                            <th scope="col" class="px-6 py-3">Akhir Cuti</th>
                             <th scope="col" class="px-6 py-3">Alasan</th>
                             <th scope="col" class="px-6 py-3">Status</th>
                             <th scope="col" class="px-6 py-3">Aksi</th>
@@ -55,7 +55,7 @@
                             <tr class="bg-white border-t border-gray-300 hover:bg-gray-100">
                                 <td class="px-6 py-4">{{ $item->pegawai->nama_pegawai }}</td>
                                 <td class="px-6 py-4">{{ $item->mulai_cuti }}</td>
-                                <td class="px-6 py-4">{{ $item->lama_cuti }}</td>
+                                <td class="px-6 py-4">{{ $item->akhir_cuti }}</td>
                                 <td class="px-6 py-4">{{ $item->keterangan }}</td>
                                 <td class="px-6 py-4">
                                     @if ($item->is_approved == 1)
