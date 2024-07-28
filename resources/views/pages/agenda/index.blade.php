@@ -44,6 +44,7 @@
                             <th scope="col" class="px-6 py-3">Tempat</th>
                             <th scope="col" class="px-6 py-3">Pakaian</th>
                             <th scope="col" class="px-6 py-3">Dihadiri</th>
+                            <th scope="col" class="px-6 py-3">Yang Diharapkan Berhadir</th>
                             <th scope="col" class="px-6 py-3">Tanggal Mulai</th>
                             <th scope="col" class="px-6 py-3">Tanggal Berakhir</th>
                             <th scope="col" class="px-6 py-3 col-span-3">Aksi</th>
@@ -57,6 +58,7 @@
                                 <td class="px-6 py-4">{{ $event->ruangan->nama_ruangan }}</td>
                                 <td class="px-6 py-4">{{ $event->pakaian }}</td>
                                 <td class="px-6 py-4">{{ $event->dihadiri }}</td>
+                                <td class="px-6 py-4">{{ $event->kapasitas }} Orang</td>
                                 <td class="px-6 py-4">{{ $event->start_event }}</td>
                                 <td class="px-6 py-4">{{ $event->end_event }}</td>
                                 <td>

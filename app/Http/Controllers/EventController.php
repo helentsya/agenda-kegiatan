@@ -114,6 +114,8 @@ class EventController extends Controller
         return response()->json(['message' => 'Event deleted successfully']);
     }
 
+
+
     public function showFormEditEventBidang($eventId)
     {
         try {
@@ -129,6 +131,7 @@ class EventController extends Controller
                         'dihadiri' => $event->dihadiri,
                         'pakaian' => $event->pakaian,
                         'keterangan' => $event->keterangan,
+                        'kapasitas' => $event->kapasitas,
                         'start_event' => $event->start_event,
                         'end_event' => $event->end_event,
                         'ruangan' => $ruangan,
@@ -143,6 +146,7 @@ class EventController extends Controller
                         'dihadiri' => $event->dihadiri,
                         'pakaian' => $event->pakaian,
                         'keterangan' => $event->keterangan,
+                        'kapasitas' => $event->kapasitas,
                         'start_event' => $event->start_event,
                         'end_event' => $event->end_event,
                         'ruangan' => $ruangan,
@@ -156,6 +160,12 @@ class EventController extends Controller
             abort(500);
         }
     }
+
+    // if (auth()->user()->roles == 'admin') {
+    //     return redirect()->route('bidang.agenda', $request->input('id_bidang'));
+    // } else {
+    //     return redirect()->route('pegawai.bidang.agenda', $request->input('id_bidang'));
+    // }
     // untuk mengelola ketika acara di ubah atau edit
     public function editEventBidang(Request $request)
     {
@@ -167,14 +177,19 @@ class EventController extends Controller
                 'dihadiri' => $request->input('dihadiri'),
                 'pakaian' => $request->input('pakaian'),
                 'keterangan' => $request->input('keterangan'),
+                'kapasitas' => $request->input('kapasitas'),
                 'start_event' => $request->input('start_event'),
                 'end_event' => $request->input('end_event'),
             ]);
+            $ruangan = Ruangan::find($request->id_ruangan);
+            if ($request->kapasitas > $ruangan->kapasitas) {
+                return back()->with('error', 'Kapasitas tidak boleh melebihi kapasitas ruangan yang terpilih.');
+            }
             Session::flash('success', 'Data Berhasil Diupdate');
         } catch (QueryException $th) {
             Session::flash('error', 'Data Gagal Diupdate: ' . $th);
         }
-        if (auth()->user()->id_jabatan == 1) {
+        if (auth()->user()->roles == 'admin') {
             return redirect()->route('bidang.agenda', $request->input('id_bidang'));
         } else {
             return redirect()->route('pegawai.bidang.agenda', $request->input('id_bidang'));
@@ -199,6 +214,7 @@ class EventController extends Controller
             'dihadiri' => $detailEvent->dihadiri,
             'pakaian' => $detailEvent->pakaian,
             'keterangan' => $detailEvent->keterangan,
+            'kapasitas' => $detailEvent->kapasitas,
             'tanggal' => $tanggal->isoFormat('dddd, D MMMM YYYY'),
             'waktu' => $tanggal->isoFormat('h:m'),
         ]);
@@ -251,24 +267,60 @@ class EventController extends Controller
     // untuk mengelola ketika acara ditambahkan
     public function storeEvent(Request $request)
     {
-        try {
-            Event::create([
-                'id_ruangan' => $request->input('id_ruangan'),
-                'id_kategori' => $request->input('id_kategori'),
-                'title' => $request->input('title'),
-                'dihadiri' => $request->input('dihadiri'),
-                'pakaian' => $request->input('pakaian'),
-                'keterangan' => $request->input('keterangan'),
-                'start_event' => $request->input('start_event'),
-                'end_event' => $request->input('end_event'),
-                'id_bidang' => $request->input('id_bidang'),
-            ]);
-            Session::flash('success', 'Data Berhasil Dimasukkan');
-        } catch (QueryException $th) {
-            Session::flash('error', $th->getMessage());
+        // dd($request->all());
+        $request->validate([
+            'id_ruangan' => 'required',
+            'id_kategori' => 'required',
+            'id_bidang' => 'required',
+            'title' => 'required|string|max:255',
+            'dihadiri' => 'required',
+            'pakaian' => 'required',
+            'keterangan' => 'required',
+            'kapasitas' => 'required|integer|min:1',
+            'start_event' => 'required|date',
+            'end_event' => 'required|date',
+
+        ]);
+
+        $ruangan = Ruangan::find($request->id_ruangan);
+        if ($request->kapasitas > $ruangan->kapasitas) {
+            return back()->with('error', 'Kapasitas tidak boleh melebihi kapasitas ruangan yang terpilih.');
         }
 
-        return redirect()->back();
+        // Event::create($request->all());
+        Event::create([
+            'id_ruangan' => $request->id_ruangan,
+            'id_kategori' => $request->id_kategori,
+            'id_bidang' => $request->id_bidang,
+            'title' => $request->title,
+            'dihadiri' => $request->dihadiri,
+            'pakaian' => $request->pakaian,
+            'keterangan' => $request->keterangan,
+            'kapasitas' => $request->kapasitas,
+            'start_event' => $request->start_event,
+            'end_event' => $request->end_event,
+
+        ]);
+        return redirect()->back()->with('success', 'Event berhasil dibuat.');
+        // try {
+        //     Event::create([
+        //         'id_ruangan' => $request->input('id_ruangan'),
+        //         'id_kategori' => $request->input('id_kategori'),
+        //         'title' => $request->input('title'),
+        //         'dihadiri' => $request->input('dihadiri'),
+        //         'pakaian' => $request->input('pakaian'),
+        //         'keterangan' => $request->input('keterangan'),
+        //         'kapasitas' => $request->input('kapasitas'),
+        //         'start_event' => $request->input('start_event'),
+        //         'end_event' => $request->input('end_event'),
+        //         'id_bidang' => $request->input('id_bidang'),
+        //     ]);
+        //     Session::flash('success', 'Data Berhasil Dimasukkan');
+        // } catch (QueryException $th) {
+        //     Session::flash('error', $th->getMessage());
+        // }
+
+        // return redirect()->back();
     }
 
 
@@ -287,6 +339,7 @@ class EventController extends Controller
                         'dihadiri' => $event->dihadiri,
                         'pakaian' => $event->pakaian,
                         'keterangan' => $event->keterangan,
+                        'kapasitas' => $event->kapasitas,
                         'start_event' => $event->start_event,
                         'end_event' => $event->end_event,
                         'ruangan' => $ruangan
@@ -299,6 +352,7 @@ class EventController extends Controller
                         'dihadiri' => $event->dihadiri,
                         'pakaian' => $event->pakaian,
                         'keterangan' => $event->keterangan,
+                        'kapasitas' => $event->kapasitas,
                         'start_event' => $event->start_event,
                         'end_event' => $event->end_event,
                         'ruangan' => $ruangan
@@ -321,6 +375,7 @@ class EventController extends Controller
                 'dihadiri' => $request->input('dihadiri'),
                 'pakaian' => $request->input('pakaian'),
                 'keterangan' => $request->input('keterangan'),
+                'kapasitas' => $request->input('kapasitas'),
                 'start_event' => $request->input('start_event'),
                 'end_event' => $request->input('end_event'),
             ]);
@@ -416,6 +471,7 @@ class EventController extends Controller
                         'dihadiri' => $event->dihadiri,
                         'pakaian' => $event->pakaian,
                         'keterangan' => $event->keterangan,
+                        'kapasitas' => $event->kapasitas,
                         'tanggal' => $tanggal->isoFormat('dddd, D MMMM YYYY'),
                         'waktu' => $tanggal->isoFormat('h:m'),
                     ];

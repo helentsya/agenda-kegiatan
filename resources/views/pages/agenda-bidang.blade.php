@@ -4,9 +4,9 @@
     @php
         // Determine the prefix based on the user's role
 $prefix = '';
-if (auth()->user()->id_jabatan == '1') {
+if (auth()->user()->id_jabatan == 1) {
     $prefix = 'admin';
-} elseif (auth()->user()->id_jabatan == '2') {
+} elseif (auth()->user()->id_jabatan == 2) {
     $prefix = 'kepala';
 } else {
     $prefix = 'pegawai';
@@ -129,6 +129,7 @@ if (auth()->user()->id_jabatan == '1') {
                                         "var_dihadiri": event.var_dihadiri,
                                         "var_pakaian": event.var_pakaian,
                                         "var_keterangan": event.var_keterangan,
+                                        "var_kapasitas": event.var_kapasitas,
                                     },
                                     success: function(response) {
                                         console.info(response);
@@ -193,7 +194,10 @@ if (auth()->user()->id_jabatan == '1') {
                                     .pakaian + '<br>' +
                                     '<strong>Tanggal:</strong> ' + event.tanggal + '<br>' +
                                     '<strong>Waktu:</strong> ' + event.waktu + '<br>' +
-                                    '<strong>Keterangan:</strong> ' + event.keterangan,
+                                    '<strong>Keterangan:</strong> ' + event.keterangan +
+                                    '<br>' +
+                                    '<strong>Yang Diharapkan Hadir:</strong> ' + event
+                                    .kapasitas,
                                 confirmButtonText: 'OK'
                             });
                         },

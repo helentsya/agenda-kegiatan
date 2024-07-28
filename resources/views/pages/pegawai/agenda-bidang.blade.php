@@ -50,7 +50,10 @@
                                     '<br><strong>Pakaian:</strong> ' + event.pakaian +
                                     '<br><strong>Tanggal:</strong> ' + event.tanggal +
                                     '<br><strong>Waktu:</strong> ' + event.waktu +
-                                    '<br><strong>Keterangan:</strong> ' + event.keterangan,
+                                    '<strong>Keterangan:</strong> ' + event.keterangan +
+                                    '<br>' +
+                                    '<strong>Yang Diharapkan Hadir:</strong> ' + event
+                                    .kapasitas,
                                 confirmButtonText: 'OK'
                             });
                         },
@@ -156,7 +159,7 @@
                                 $.each(events, function(index, event) {
                                     let row = $('<tr>').addClass(
                                         'bg-white border-t border-gray-300 hover:bg-gray-100'
-                                        );
+                                    );
                                     $('<td>').addClass('px-6 py-4').text(event
                                         .title).appendTo(row);
                                     $('<td>').addClass('px-6 py-4').text(event
