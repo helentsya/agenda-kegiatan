@@ -34,4 +34,8 @@ class Pegawai extends Model
     {
         return $this->belongsTo(Jabatan::class, 'id_jabatan', 'id_jabatan');
     }
+    public function jatahCuti()
+    {
+        return $this->hasOne(JatahCuti::class, 'id_pegawai');
+    }
 }

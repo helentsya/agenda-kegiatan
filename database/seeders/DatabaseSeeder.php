@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             PegawaiSeeder::class,
             KategoriKegiatanSeeder::class,
             JabatanSeeder::class,
+            JatahCutiSeeder::class,
         ]);
 
         //buat 3 user dengan role admin 1 dan pegawai 2

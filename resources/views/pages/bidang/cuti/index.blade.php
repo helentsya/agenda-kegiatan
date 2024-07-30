@@ -68,10 +68,14 @@
                                 </td>
                                 <td>
                                     @if ($item->is_approved == 0)
-                                        <a class="badge btn-red-500 btn-sm"
-                                            href="{{ route('bidang.cuti.delete', $item->id) }}">Batal</a>
+                                        <form action="{{ route('bidang.cuti.cancel', $item->id) }}" method="POST">
+                                            @csrf
+                                            <button type="submit"
+                                                class="badge bg-red-500 rounded-full py-2 px-2 text-white">Batal</button>
+                                        </form>
                                     @endif
                                 </td>
+
                             </tr>
                         @empty
                             <tr>
