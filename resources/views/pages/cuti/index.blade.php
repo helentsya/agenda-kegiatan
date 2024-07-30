@@ -64,7 +64,7 @@
                                 Tanggal Cuti
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Durasi Cuti
+                                Akhir Cuti
                             </th>
                             <th scope="col" class="px-6 py-3">
                                 Alasan
@@ -82,8 +82,8 @@
                                 <td class="px-6 py-4">{{ $item->pegawai->nama_pegawai }}</td>
                                 <td class="px-6 py-4">{{ $item->bidang->nama_bidang }}</td>
                                 <td class="px-6 py-4"><span class="badge bg-primary">{{ $item->mulai_cuti }}</td>
-                                <td class="px-6 py-4">{{ $item->lama_cuti }}</td>
-                                <td class="px-6 py-4">{{ $item->keterangan }}</td>
+                                <td class="px-6 py-4">{{ $item->akhir_cuti }}</td>
+                                <td class="px-6 py-4">{{ $item->alasan }}</td>
                                 @if (auth()->user()->roles == 'admin' || auth()->user()->roles == 'kepalapejabat')
                                     <td class="px-6 py-4">
                                         @if ($item->is_approved == 1)

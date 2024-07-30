@@ -14,12 +14,12 @@
         <script>
             Swal.fire({
                 icon: 'success',
-                title: 'Cuti Anda Berhasil Diajukan',
+                title: 'Pengajuan Cuti Pegawai',
                 text: '{{ Session::get('success') }}',
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Jika tombol OK diklik, arahkan ke halaman utama
-                    window.location.href = "{{ route('bidang.cuti.index') }}";
+                    window.location.href = "/bidang";
                 }
             });
         </script>
@@ -37,21 +37,29 @@
             </div>
             <div class="relative mb-4 w-full">
                 <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Status</label>
-                <select id="countries" name="jenis_cuti"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <select id="countries" name="jenis_cuti" @error('jenis_cuti') is-invalid @enderror
+                    class="bg-gray-50
+                    border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block
+                    w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+                    dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     <option selected disabled>Pilih Jenis Cuti</option>
                     <option value="cuti tahunan">Cuti Tahunan (max 12 hari)</option>
                     <option value="cuti besar">Cuti Besar (max 30 hari)</option>
                     <option value="cuti sakit">Cuti Sakit (max 10 hari)</option>
                     <option value="cuti melahirkan">Cuti Melahirkan (max 90 hari)</option>
                 </select>
-                </select>
+                @error('jenis_cuti')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="relative mb-4 w-full">
-                <input required type="date" id="floating_awal_cuti"
+                <input required type="date" id="floating_awal_cuti" @error('mulai_cuti') is-invalid @enderror"
                     class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     placeholder=" " name="mulai_cuti" />
+                @error('mulai_cuti')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
                 <label for="floating_awal_cuti"
                     class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Awal
                     Cuti
@@ -59,9 +67,12 @@
             </div>
 
             <div class="relative mb-4 w-full">
-                <input required type="date" id="floating_akhir_cuti"
+                <input required type="date" id="floating_akhir_cuti" @error('akhir_cuti') is-invalid @enderror"
                     class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     placeholder=" " name="akhir_cuti" />
+                @error('akhir_cuti')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
                 <label for="floating_akhir_cuti"
                     class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Akhir
                     Cuti
@@ -69,9 +80,12 @@
             </div>
 
             <div class="relative mb-4 w-full">
-                <input required type="text" id="floating_alasan"
+                <input required type="text" id="floating_alasan" @error('alasan') is-invalid @enderror"
                     class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     placeholder=" " name="alasan" />
+                @error('alasan')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
                 <label for="floating_alasan"
                     class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">Alasan
                     Cuti

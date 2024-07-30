@@ -203,11 +203,10 @@ class PegawaiController extends Controller
             $user->email = $request->email;
             $user->id_jabatan = $request->jabatan;
 
-
-            if ($request->id_jabatan == 2) {
-                $user->roles = "kepalapejabat";
-            } elseif ($request->id_jabatan >= 3 && $request->id_jabatan <= 6) {
+            if ($request->jabatan >= 3 && $request->jabatan <= 6) {
                 $user->roles = "pegawai";
+            } elseif ($request->jabatan == 2) {
+                $user->roles = "kepalapejabat";
             } else {
                 $user->roles = "bidang";
             }

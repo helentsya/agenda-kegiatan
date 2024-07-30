@@ -31,7 +31,7 @@ class CutiController extends Controller
         } elseif ($id_bidang >= 2 && $id_bidang <= 5) {
             // Admin (id_bidang 2 hingga 5) melihat data cuti dengan status is_approved 1
             $cuti = Cuti::with('pegawai', 'bidang')
-                ->where('is_approved', 1)
+                // ->where('is_approved', 1)
                 ->get();
         } else {
             // Pegawai lainnya melihat data cuti yang sesuai dengan id_bidang mereka
@@ -65,26 +65,24 @@ class CutiController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $id_user = auth()->user()->pegawai->id;
         $id_bidang = auth()->user()->pegawai->id_bidang;
 
         $rules = Cuti::rules($request);
         $request->validate($rules);
 
-
-        // $request->validate([
-        //     'id_pegawai' => 'required|exists:pegawais,id',
-        //     'mulai_cuti' => 'required|date',
-        //     'akhir_cuti' => 'required|date',
-        //     'alasan' => 'required|string|max:255'
-        // ]);
-
-        $pegawai = Pegawai::find($request->pegawai->id);
+        $pegawai = Pegawai::find($id_user);
         $waktuMasuk = Carbon::parse($pegawai->waktu_masuk);
 
         if ($waktuMasuk->diffInYears(Carbon::now()) < 1) {
             return back()->with('error', 'Pegawai belum bekerja lebih dari 1 tahun.');
         }
+
+        // $error = Cuti::validateCuti($request);
+        // if ($error) {
+        //     return back()->with('error', $error);
+        // }
 
         Cuti::create([
             'id_pegawai' => $id_user,
@@ -92,12 +90,14 @@ class CutiController extends Controller
             'mulai_cuti' => $request->mulai_cuti,
             'akhir_cuti' => $request->akhir_cuti,
             'jenis_cuti' => $request->jenis_cuti,
-            'keterangan' => $request->alasan,
+            'alasan' => $request->alasan,
             'is_approved' => false
         ]);
 
-        return redirect()->route('cuti.index')->with('success', 'Cuti berhasil diajukan.');
+        return redirect()->route('pegawai.cuti.index')->with('success', 'Cuti berhasil diajukan.');
     }
+
+
 
     /**
      * Display the specified resource.

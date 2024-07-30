@@ -77,6 +77,7 @@ class AgendaBidangController extends Controller
      */
     public function cuti_store(Request $request)
     {
+        // dd($request->all());
         $id_user = auth()->user()->pegawai->id;
         $id_bidang = auth()->user()->pegawai->id_bidang;
 
@@ -125,7 +126,7 @@ class AgendaBidangController extends Controller
             'mulai_cuti' => $request->mulai_cuti,
             'akhir_cuti' => $request->akhir_cuti,
             'jenis_cuti' => $request->jenis_cuti,
-            'keterangan' => $request->alasan,
+            'alasan' => $request->alasan,
             'is_approved' => false
         ]);
 

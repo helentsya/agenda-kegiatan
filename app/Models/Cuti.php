@@ -15,7 +15,7 @@ class Cuti extends Model
         'jenis_cuti',
         'mulai_cuti',
         'akhir_cuti',
-        'keterangan',
+        'alasan',
         'is_approved'
     ];
 

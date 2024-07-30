@@ -56,7 +56,7 @@
                                 <td class="px-6 py-4">{{ $item->pegawai->nama_pegawai }}</td>
                                 <td class="px-6 py-4">{{ $item->mulai_cuti }}</td>
                                 <td class="px-6 py-4">{{ $item->akhir_cuti }}</td>
-                                <td class="px-6 py-4">{{ $item->keterangan }}</td>
+                                <td class="px-6 py-4">{{ $item->alasan }}</td>
                                 <td class="px-6 py-4">
                                     @if ($item->is_approved == 1)
                                         <span class="badge bg-green-500 rounded-full py-2 px-2 text-white">Telah

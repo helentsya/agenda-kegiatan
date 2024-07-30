@@ -185,14 +185,14 @@ class EventController extends Controller
             if ($request->kapasitas > $ruangan->kapasitas) {
                 return back()->with('error', 'Kapasitas tidak boleh melebihi kapasitas ruangan yang terpilih.');
             }
-            Session::flash('success', 'Data Berhasil Diupdate');
+            Session::flash('success', 'Jabatan Berhasil Diubah');
+            if (auth()->user()->roles == 'admin') {
+                return redirect()->route('bidang.agenda', $request->input('id_bidang'))->with('success', 'Event berhasil dibuat.');;
+            } else {
+                return redirect()->route('pegawai.bidang.agenda', $request->input('id_bidang'))->with('success', 'Event berhasil dibuat.');;
+            }
         } catch (QueryException $th) {
             Session::flash('error', 'Data Gagal Diupdate: ' . $th);
-        }
-        if (auth()->user()->roles == 'admin') {
-            return redirect()->route('bidang.agenda', $request->input('id_bidang'));
-        } else {
-            return redirect()->route('pegawai.bidang.agenda', $request->input('id_bidang'));
         }
     }
 
