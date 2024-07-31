@@ -31,8 +31,10 @@ class CutiController extends Controller
         } elseif ($id_bidang >= 2 && $id_bidang <= 5) {
             // Admin (id_bidang 2 hingga 5) melihat data cuti dengan status is_approved 1
             $cuti = Cuti::with('pegawai', 'bidang')
-                // ->where('is_approved', 1)
-                ->get();
+                ->where(function ($query) use ($user, $id_bidang) {
+                    $query->where('is_approved', 1)
+                        ->orWhere('id_pegawai', $user->pegawai->id);
+                })->get();
         } else {
             // Pegawai lainnya melihat data cuti yang sesuai dengan id_bidang mereka
             $cuti = Cuti::with('pegawai', 'bidang')
@@ -65,7 +67,6 @@ class CutiController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $id_user = auth()->user()->pegawai->id;
         $id_bidang = auth()->user()->pegawai->id_bidang;
 
@@ -73,16 +74,47 @@ class CutiController extends Controller
         $request->validate($rules);
 
         $pegawai = Pegawai::find($id_user);
+        $jatahCuti = $pegawai->jatahCuti;
         $waktuMasuk = Carbon::parse($pegawai->waktu_masuk);
 
         if ($waktuMasuk->diffInYears(Carbon::now()) < 1) {
             return back()->with('error', 'Pegawai belum bekerja lebih dari 1 tahun.');
         }
+        $mulaiCuti = Carbon::parse($request->mulai_cuti);
+        $akhirCuti = Carbon::parse($request->akhir_cuti);
+        $lamaCuti = $mulaiCuti->diffInDays($akhirCuti) + 1;
 
-        // $error = Cuti::validateCuti($request);
-        // if ($error) {
-        //     return back()->with('error', $error);
-        // }
+        // Validasi durasi cuti berdasarkan jenis cuti
+        switch ($request->jenis_cuti) {
+            case 'cuti tahunan':
+                if ($lamaCuti > $jatahCuti->cuti_tahunan) {
+                    return back()->withErrors(['akhir_cuti' => 'Durasi cuti tahunan tidak boleh lebih dari jatah cuti tahunan.']);
+                }
+                $jatahCuti->cuti_tahunan -= $lamaCuti;
+                break;
+            case 'cuti besar':
+                if ($lamaCuti > $jatahCuti->cuti_besar) {
+                    return back()->withErrors(['akhir_cuti' => 'Durasi cuti besar tidak boleh lebih dari jatah cuti besar.']);
+                }
+                $jatahCuti->cuti_besar -= $lamaCuti;
+                break;
+            case 'cuti sakit':
+                if ($lamaCuti > $jatahCuti->cuti_sakit) {
+                    return back()->withErrors(['akhir_cuti' => 'Durasi cuti sakit tidak boleh lebih dari jatah cuti sakit.']);
+                }
+                $jatahCuti->cuti_sakit -= $lamaCuti;
+                break;
+            case 'cuti melahirkan':
+                if ($lamaCuti > $jatahCuti->cuti_melahirkan) {
+                    return back()->withErrors(['akhir_cuti' => 'Durasi cuti melahirkan tidak boleh lebih dari jatah cuti melahirkan.']);
+                }
+                $jatahCuti->cuti_melahirkan -= $lamaCuti;
+                break;
+            default:
+                return back()->withErrors(['jenis_cuti' => 'Jenis cuti tidak valid.']);
+        }
+
+        $jatahCuti->save();
 
         Cuti::create([
             'id_pegawai' => $id_user,
@@ -90,6 +122,7 @@ class CutiController extends Controller
             'mulai_cuti' => $request->mulai_cuti,
             'akhir_cuti' => $request->akhir_cuti,
             'jenis_cuti' => $request->jenis_cuti,
+            'lama_cuti' => $lamaCuti, // Simpan durasi cuti
             'alasan' => $request->alasan,
             'is_approved' => false
         ]);

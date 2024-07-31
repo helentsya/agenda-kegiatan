@@ -67,6 +67,9 @@
                                 Akhir Cuti
                             </th>
                             <th scope="col" class="px-6 py-3">
+                                Cuti Yang Diajukan
+                            </th>
+                            <th scope="col" class="px-6 py-3">
                                 Alasan
                             </th>
                             @if (auth()->user()->roles == 'admin' || auth()->user()->roles == 'kepalapejabat')
@@ -83,6 +86,7 @@
                                 <td class="px-6 py-4">{{ $item->bidang->nama_bidang }}</td>
                                 <td class="px-6 py-4"><span class="badge bg-primary">{{ $item->mulai_cuti }}</td>
                                 <td class="px-6 py-4">{{ $item->akhir_cuti }}</td>
+                                <td class="px-6 py-4">{{ $item->jenis_cuti }}</td>
                                 <td class="px-6 py-4">{{ $item->alasan }}</td>
                                 @if (auth()->user()->roles == 'admin' || auth()->user()->roles == 'kepalapejabat')
                                     <td class="px-6 py-4">

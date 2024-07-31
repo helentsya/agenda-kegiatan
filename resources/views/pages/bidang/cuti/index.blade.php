@@ -45,6 +45,7 @@
                             <th scope="col" class="px-6 py-3">Nama Pegawai</th>
                             <th scope="col" class="px-6 py-3">Tanggal Cuti</th>
                             <th scope="col" class="px-6 py-3">Akhir Cuti</th>
+                            <th scope="col" class="px-6 py-3">Cuti Yang Diajukan</th>
                             <th scope="col" class="px-6 py-3">Alasan</th>
                             <th scope="col" class="px-6 py-3">Status</th>
                             <th scope="col" class="px-6 py-3">Aksi</th>
@@ -56,6 +57,7 @@
                                 <td class="px-6 py-4">{{ $item->pegawai->nama_pegawai }}</td>
                                 <td class="px-6 py-4">{{ $item->mulai_cuti }}</td>
                                 <td class="px-6 py-4">{{ $item->akhir_cuti }}</td>
+                                <td class="px-6 py-4">{{ $item->jenis_cuti }}</td>
                                 <td class="px-6 py-4">{{ $item->alasan }}</td>
                                 <td class="px-6 py-4">
                                     @if ($item->is_approved == 1)
