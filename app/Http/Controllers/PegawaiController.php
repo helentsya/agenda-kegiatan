@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Bidang;
 use App\Models\Jabatan;
+use App\Models\JatahCuti;
 use App\Models\Pegawai;
 use App\Models\User;
 use Illuminate\Database\QueryException;
@@ -106,16 +107,14 @@ class PegawaiController extends Controller
 
             $user->save();
 
-            //  Pegawai::create([
-            //     'id_bidang' => $request->bidang,
-            //     'nip'     => $request->nip,
-            //     'nama_pegawai' => $request->nama_pegawai,
-            //     'jenis_kelamin' => $request->jenis_kelamin,
-            //     'tempat_lahir' => $request->tempat_lahir,
-            //     'tanggal_lahir' => $request->tanggal_lahir,
-            //     'jabatan' => $request->jabatan,
-            //     'alamat' => $request->alamat,
-            // ]);
+            // Tambahkan jatah cuti
+            JatahCuti::create([
+                'id_pegawai' => $pegawai->id,
+                'cuti_tahunan' => 12,
+                'cuti_besar' => 30,
+                'cuti_sakit' => 10,
+                'cuti_melahirkan' => 90
+            ]);
             Session::flash('success', 'Data Berhasil Dimasukkan');
         } catch (QueryException $th) {
             Session::flash('error', 'Data Gagal Dimasukkan' . $th->getMessage());
@@ -212,6 +211,8 @@ class PegawaiController extends Controller
             }
 
             $user->save();
+
+            // Update jatah_cuti
 
 
             Session::flash('success', 'Data User Berhasil Diperbarui');
